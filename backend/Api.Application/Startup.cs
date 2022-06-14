@@ -28,6 +28,7 @@ namespace Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDataDependencies(_config);
+            services.AddServicesDependencies(_config);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

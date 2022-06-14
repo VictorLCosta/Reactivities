@@ -68,9 +68,9 @@ namespace Api.Data.Repositories
             {
                 return await _context.Set<T>().ToListAsync();
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -80,9 +80,9 @@ namespace Api.Data.Repositories
             {
                 return await _context.Set<T>().SingleOrDefaultAsync(x => x.Id == id);
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -97,9 +97,9 @@ namespace Api.Data.Repositories
                 var result = _context.Set<T>().Remove(entity);
                 return true;
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                throw e;
+                throw;
             }
         }
 
