@@ -1,4 +1,7 @@
 using Api.Data;
+using Api.Data.Interfaces;
+using Api.Data.Repositories;
+using Api.Data.Transaction;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +17,10 @@ namespace Api.CrossCutting.DependencyInjection
             services.AddDbContext<ApplicationDbContext>(opt => {
                 opt.UseSqlite(connectionString);
             });
+
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddTransient<IUow, Uow>();
 
             return services;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.CrossCutting.DependencyInjection;
+using Api.Data.Transaction;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,6 +38,15 @@ namespace Application
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Use(async (context, next) =>
+            {
+                await next.Invoke();
+
+                var unitOfWork = (IUow)context.RequestServices.GetService(typeof(IUow));
+                await unitOfWork.Commit();
+                unitOfWork.Dispose();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
