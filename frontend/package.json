@@ -1,0 +1,27 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Frontend application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorLCosta/Reactivities.git"
+  },
+  "author": "VictorLCosta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorLCosta/Reactivities/issues"
+  },
+  "homepage": "https://github.com/VictorLCosta/Reactivities#readme",
+  "dependencies": {
+    "@types/node": "^17.0.42",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.7.3"
+  }
+}
