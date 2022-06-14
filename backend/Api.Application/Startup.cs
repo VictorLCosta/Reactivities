@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.CrossCutting.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +26,7 @@ namespace Application
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDataDependencies(_config);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
