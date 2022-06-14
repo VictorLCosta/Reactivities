@@ -117,9 +117,9 @@ namespace Api.Data.Repositories
                 _context.Entry(result).State = EntityState.Detached;
                 _context.Entry(entity).State = EntityState.Modified;
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                throw e;
+                throw;
             }
 
             return entity;
