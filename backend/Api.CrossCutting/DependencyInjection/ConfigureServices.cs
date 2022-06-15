@@ -1,5 +1,5 @@
-using Api.Services.Interfaces;
-using Api.Services.Services;
+using Api.Services.Activitities;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +9,7 @@ namespace Api.CrossCutting.DependencyInjection
     {
         public static IServiceCollection AddServicesDependencies(this IServiceCollection services, IConfiguration config)
         {
-            services.AddTransient<IActivitiesService, ActivitiesService>();
+            services.AddMediatR(typeof(List.Handler).Assembly);
 
             return services;
         }
