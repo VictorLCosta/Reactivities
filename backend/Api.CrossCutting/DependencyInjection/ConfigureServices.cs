@@ -1,3 +1,4 @@
+using Api.CrossCutting.AutoMapper;
 using Api.Services.Activitities;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,8 @@ namespace Api.CrossCutting.DependencyInjection
         public static IServiceCollection AddServicesDependencies(this IServiceCollection services, IConfiguration config)
         {
             services.AddMediatR(typeof(List.Handler).Assembly);
+
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
             return services;
         }
