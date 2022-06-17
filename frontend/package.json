@@ -43,6 +43,7 @@
     "fork-ts-checker-webpack-plugin": "^7.2.11",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.0",
+    "moment": "^2.29.3",
     "path": "^0.12.7",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.2"
