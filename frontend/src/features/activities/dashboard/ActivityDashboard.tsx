@@ -1,5 +1,6 @@
 import { Grid } from "semantic-ui-react"
 import ActivityList from './ActivityList';
+import ActivityDetails from "../details/ActivityDetails";
 
 import { Activity } from './../../../app/models/activity';
 
@@ -12,6 +13,10 @@ const ActivityDashboard = ({activities}: Props) => {
         <Grid>
             <Grid.Column width="10">
                 <ActivityList activities={activities} />
+            </Grid.Column>
+            <Grid.Column width="6">
+                {activities[0] &&
+                <ActivityDetails activity={activities[0]} />}
             </Grid.Column>
         </Grid>
     )
