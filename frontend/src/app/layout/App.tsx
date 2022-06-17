@@ -6,6 +6,7 @@ import './styles.css'
 
 import { Activity } from './../models/activity';
 import Navbar from './Navbar';
+import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 
 const App = (props: any) => {
     const [activities, setActivities] = useState<Activity[]>([])
@@ -20,13 +21,7 @@ const App = (props: any) => {
         <>
             <Navbar/>
             <Container style={{marginTop: '5em'}}>
-                <ul>
-                    {activities.map((el, i) => (
-                        <List.Item key={i}>
-                            {el.title}, {el.city}
-                        </List.Item>
-                    ))}
-                </ul>
+                <ActivityDashboard activities={activities} />
             </Container>
         </>
     )
