@@ -13,7 +13,7 @@ const ActivityDetails = ({activity}: Props) => {
             <CardContent>
                 <Card.Header>{activity.title}</Card.Header>
                 <Card.Meta>
-                    <span>{activity.date}</span>
+                    <span>{moment(activity.date).format("dddd, MMMM DD yyyy")}</span>
                 </Card.Meta>
                 <Card.Description>
                     {activity.description}
