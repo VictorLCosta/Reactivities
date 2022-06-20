@@ -4,10 +4,11 @@ import moment from 'moment'
 
 interface Props {
     activity: Activity | undefined,
-    cancelSelectActivity: () => void
+    cancelSelectActivity: () => void,
+    openForm: (id?: string) => void
 }
 
-const ActivityDetails = ({activity, cancelSelectActivity}: Props) => {
+const ActivityDetails = ({activity, cancelSelectActivity, openForm}: Props) => {
     if(activity) {
         return (
             <Card>
@@ -23,7 +24,7 @@ const ActivityDetails = ({activity, cancelSelectActivity}: Props) => {
                 </CardContent>
                 <CardContent extra>
                     <Button.Group widths="2">
-                        <Button basic color="blue" content="Edit" />
+                        <Button onClick={() => openForm(activity.id)} basic color="blue" content="Edit" />
                         <Button onClick={() => cancelSelectActivity()} basic color="grey" content="Cancel" />
                     </Button.Group>
                 </CardContent>

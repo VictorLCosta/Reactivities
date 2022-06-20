@@ -11,7 +11,7 @@ const ActivityForm = (props: any) => {
                 <Form.Input placeholder="City" />
                 <Form.Input placeholder="Venue" />
                 <Button floated="right" positive type="submit" content="Submit" />
-                <Button floated="right" type="button" content="Cancel" />
+                <Button onClick={() => props.closeForm()} floated="right" type="button" content="Cancel" />
             </Form>
         </Segment>
     )

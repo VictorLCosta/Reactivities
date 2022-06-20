@@ -10,7 +10,7 @@ const Navbar = (props: any) => {
                 </Menu.Item>
                 <Menu.Item name="Activities"/>
                 <Menu.Item header>
-                    <Button positive content="Create Activity"/>
+                    <Button onClick={() => props.openForm()} positive content="Create Activity"/>
                 </Menu.Item>
             </Container>
         </Menu>
