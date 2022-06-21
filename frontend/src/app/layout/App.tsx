@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Container } from 'semantic-ui-react'
+import Navbar from './Navbar';
+import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
+import { v4 as uuid } from 'uuid';
 
 import './styles.css'
 
 import { Activity } from './../models/activity';
-import Navbar from './Navbar';
-import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 
 const App = (props: any) => {
     const [activities, setActivities] = useState<Activity[]>([])
@@ -39,7 +40,7 @@ const App = (props: any) => {
     function handleCreateOrEditActivity (activity: Activity) {
         activity.id 
         ? setActivities([...activities.filter(x => x.id !== activity.id), activity]) 
-        : setActivities([...activities, activity])
+        : setActivities([...activities, {...activity, id: uuid()}])
 
         setEditMode(false)
         selectActivity(activity)
