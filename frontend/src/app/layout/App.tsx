@@ -46,6 +46,10 @@ const App = (props: any) => {
         selectActivity(activity)
     }
 
+    function handleDelete (id: string) {
+        setActivities([...activities.filter(x => x.id !== id)])
+    }
+
     return (
         <>
             <Navbar openForm={handleFormOpen} />
@@ -59,6 +63,7 @@ const App = (props: any) => {
                     openForm={handleFormOpen}
                     closeForm={handleFormClose}
                     createOrEdit={handleCreateOrEditActivity}
+                    delete={handleDelete}
                 />
             </Container>
         </>

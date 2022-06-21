@@ -5,10 +5,11 @@ import { Activity } from './../../../app/models/activity';
 
 interface Props {
     activities: Activity[],
-    selectActivity: (id: string) => void
+    selectActivity: (id: string) => void,
+    delete: (id: string) => void
 }
 
-const ActivityList = ({activities, selectActivity}: Props) => {
+const ActivityList = ({activities, selectActivity, delete: deleteActivity}: Props) => {
     return (
         <Segment>
             <Item.Group divided>
@@ -23,6 +24,7 @@ const ActivityList = ({activities, selectActivity}: Props) => {
                             </Item.Description>
                             <Item.Extra>
                                 <Button onClick={() => selectActivity(item.id)} floated='right' content="View" color="blue" />
+                                <Button onClick={() => deleteActivity(item.id)} floated='right' content="Delete" color="red" />
                                 <Label basic content={item.category} />
                             </Item.Extra>
                         </Item.Content>
