@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Container, Header, List } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 
 import './styles.css'
 
@@ -36,6 +36,15 @@ const App = (props: any) => {
         setEditMode(false)
     }
 
+    function handleCreateOrEditActivity (activity: Activity) {
+        activity.id 
+        ? setActivities([...activities.filter(x => x.id !== activity.id), activity]) 
+        : setActivities([...activities, activity])
+
+        setEditMode(false)
+        selectActivity(activity)
+    }
+
     return (
         <>
             <Navbar openForm={handleFormOpen} />
@@ -48,6 +57,7 @@ const App = (props: any) => {
                     editMode={editMode}
                     openForm={handleFormOpen}
                     closeForm={handleFormClose}
+                    createOrEdit={handleCreateOrEditActivity}
                 />
             </Container>
         </>
