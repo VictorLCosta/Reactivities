@@ -1,4 +1,4 @@
-import axios from 'axios'
+import agent from '../api/agent';
 import { useEffect, useState } from 'react'
 import { Container } from 'semantic-ui-react'
 import Navbar from './Navbar';
@@ -15,8 +15,8 @@ const App = (props: any) => {
     const [editMode, setEditMode] = useState(false)
 
     useEffect(() => {
-        axios.get<Activity[]>('https://localhost:5001/api/activities').then(resp => {
-            setActivities(resp.data)
+        agent.Activities.list().then(resp => {
+            setActivities(resp)
         })
     }, [])
 
