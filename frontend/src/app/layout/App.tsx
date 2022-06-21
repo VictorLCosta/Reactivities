@@ -16,7 +16,12 @@ const App = (props: any) => {
 
     useEffect(() => {
         agent.Activities.list().then(resp => {
-            setActivities(resp)
+            let activities: Activity[] = []
+            resp.forEach(activity => {
+                activity.date = activity.date.split('T')[0]
+                activities.push(activity)
+            })
+            setActivities(activities)
         })
     }, [])
 
