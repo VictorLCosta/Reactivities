@@ -10,7 +10,11 @@ import './styles.css'
 import { Activity } from './../models/activity';
 import Loading from './Loading';
 
+import { useStore } from '../stores/store';
+
 const App = (props: any) => {
+    const {activityStore} = useStore()
+
     const [activities, setActivities] = useState<Activity[]>([])
     const [selectedActivity, selectActivity] = useState<Activity | undefined>(undefined)
     const [editMode, setEditMode] = useState(false)
