@@ -8,11 +8,14 @@ import { v4 as uuid } from 'uuid';
 import './styles.css'
 
 import { Activity } from './../models/activity';
+import Loading from './Loading';
 
 const App = (props: any) => {
     const [activities, setActivities] = useState<Activity[]>([])
     const [selectedActivity, selectActivity] = useState<Activity | undefined>(undefined)
     const [editMode, setEditMode] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [submitting, setSubmitting] = useState(false)
 
     useEffect(() => {
         agent.Activities.list().then(resp => {
@@ -22,6 +25,7 @@ const App = (props: any) => {
                 activities.push(activity)
             })
             setActivities(activities)
+            setLoading(false)
         })
     }, [])
 
@@ -43,17 +47,30 @@ const App = (props: any) => {
     }
 
     function handleCreateOrEditActivity (activity: Activity) {
-        activity.id 
-        ? setActivities([...activities.filter(x => x.id !== activity.id), activity]) 
-        : setActivities([...activities, {...activity, id: uuid()}])
-
-        setEditMode(false)
-        selectActivity(activity)
+        setSubmitting(true)
+        if(activity.id) {
+            agent.Activities.update(activity).then(() => {
+                setActivities([...activities.filter(x => x.id !== activity.id), activity])
+                selectActivity(activity)
+                setEditMode(false)
+                setSubmitting(false)
+            })
+        } else {
+            activity.id = uuid()
+            agent.Activities.create(activity).then(() => {
+                setActivities([...activities, activity])
+                selectActivity(activity)
+                setEditMode(false)
+                setSubmitting(false)
+            })
+        }
     }
 
     function handleDelete (id: string) {
         setActivities([...activities.filter(x => x.id !== id)])
     }
+
+    if (loading) return <Loading content="Loading app"/>
 
     return (
         <>
@@ -69,6 +86,7 @@ const App = (props: any) => {
                     closeForm={handleFormClose}
                     createOrEdit={handleCreateOrEditActivity}
                     delete={handleDelete}
+                    submitting={submitting}
                 />
             </Container>
         </>
