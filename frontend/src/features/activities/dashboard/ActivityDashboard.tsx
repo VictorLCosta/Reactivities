@@ -23,7 +23,7 @@ const ActivityDashboard = ({activities, selectedActivity,
     return (
         <Grid>
             <Grid.Column width="10">
-                <ActivityList activities={activities} selectActivity={selectActivity} delete={deleteActivity}/>
+                <ActivityList activities={activities} selectActivity={selectActivity} delete={deleteActivity} submitting={submitting}/>
             </Grid.Column>
             <Grid.Column width="6">
                 {selectedActivity && !editMode &&
