@@ -13,6 +13,7 @@ import Loading from './Loading';
 import { useStore } from '../stores/store';
 import { observer } from 'mobx-react-lite';
 
+
 const App = (props: any) => {
     const {activityStore} = useStore()
 
@@ -23,24 +24,7 @@ const App = (props: any) => {
 
     useEffect(() => {
         activityStore.loadActivities()
-    }, [])
-
-    function handleSelectedActivity (id: string) {
-        selectActivity(activities.find(x => x.id == id))
-    }
-
-    function handleCancelSelectActivity () {
-        selectActivity(undefined)
-    }
-
-    function handleFormOpen (id?: string) {
-        id ? handleSelectedActivity(id) : handleCancelSelectActivity()
-        setEditMode(true)
-    }
-
-    function handleFormClose () {
-        setEditMode(false)
-    }
+    }, [activityStore])
 
     function handleCreateOrEditActivity (activity: Activity) {
         setSubmitting(true)
@@ -74,16 +58,10 @@ const App = (props: any) => {
 
     return (
         <>
-            <Navbar openForm={handleFormOpen} />
+            <Navbar/>
             <Container style={{marginTop: '5em'}}>
                 <ActivityDashboard 
                     activities={activityStore.activities}
-                    selectedActivity={selectedActivity}
-                    selectActivity={handleSelectedActivity}
-                    cancelSelectActivity={handleCancelSelectActivity}
-                    editMode={editMode}
-                    openForm={handleFormOpen}
-                    closeForm={handleFormClose}
                     createOrEdit={handleCreateOrEditActivity}
                     delete={handleDelete}
                     submitting={submitting}

@@ -3,15 +3,17 @@ import moment from 'moment'
 
 import { Activity } from './../../../app/models/activity';
 import { SyntheticEvent, useState } from "react";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 interface Props {
     activities: Activity[],
-    selectActivity: (id: string) => void,
     delete: (id: string) => void,
     submitting: boolean
 }
 
-const ActivityList = ({activities, selectActivity, delete: deleteActivity, submitting}: Props) => {
+const ActivityList = ({activities, delete: deleteActivity, submitting}: Props) => {
+    const {activityStore} = useStore()
     const [target, setTarget] = useState('')
 
     function handleDelete (event: SyntheticEvent<HTMLButtonElement>, id: string) {
@@ -32,7 +34,7 @@ const ActivityList = ({activities, selectActivity, delete: deleteActivity, submi
                                 <div>{item.city}, {item.venue}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button onClick={() => selectActivity(item.id)} floated='right' content="View" color="blue" />
+                                <Button onClick={() => activityStore.selectActivity(item.id)} floated='right' content="View" color="blue" />
                                 <Button name={item.id} loading={submitting && target == item.id} onClick={(e) => handleDelete(e, item.id)} floated='right' content="Delete" color="red" />
                                 <Label basic content={item.category} />
                             </Item.Extra>
@@ -44,4 +46,4 @@ const ActivityList = ({activities, selectActivity, delete: deleteActivity, submi
     )
 }
 
-export default ActivityList
+export default observer(ActivityList)

@@ -1,39 +1,37 @@
 import { Button, Card, CardContent, Image } from 'semantic-ui-react';
-import { Activity } from './../../../app/models/activity';
+import { useStore } from '../../../app/stores/store';
 import moment from 'moment'
+import { observer } from 'mobx-react-lite';
 
-interface Props {
-    activity: Activity | undefined,
-    cancelSelectActivity: () => void,
-    openForm: (id?: string) => void
+
+const ActivityDetails = (props: any) => {
+    const { activityStore } = useStore()
+    const { activity, openForm, cancelSelectedActivity } = activityStore
+
+    if (!activity) return <></>;
+
+    return (
+        <Card fluid>
+            <Image href={`/assets/categoryImages/${activity.category}.jpg`} />
+            <CardContent>
+                <Card.Header>{activity.title}</Card.Header>
+                <Card.Meta>
+                    <span>{moment(activity.date).format("dddd, MMMM DD yyyy")}</span>
+                </Card.Meta>
+                <Card.Description>
+                    {activity.description}
+                </Card.Description>
+            </CardContent>
+            <CardContent extra>
+                <Button.Group widths="2">
+                    <Button onClick={() => openForm(activity.id)} basic color="blue" content="Edit" />
+                    <Button onClick={() => cancelSelectedActivity()} basic color="grey" content="Cancel" />
+                </Button.Group>
+            </CardContent>
+        </Card>
+    )
+
+
 }
 
-const ActivityDetails = ({activity, cancelSelectActivity, openForm}: Props) => {
-    if(activity) {
-        return (
-            <Card>
-                <Image href={`/assets/categoryImages/${activity.category}.jpg`} />
-                <CardContent>
-                    <Card.Header>{activity.title}</Card.Header>
-                    <Card.Meta>
-                        <span>{moment(activity.date).format("dddd, MMMM DD yyyy")}</span>
-                    </Card.Meta>
-                    <Card.Description>
-                        {activity.description}
-                    </Card.Description>
-                </CardContent>
-                <CardContent extra>
-                    <Button.Group widths="2">
-                        <Button onClick={() => openForm(activity.id)} basic color="blue" content="Edit" />
-                        <Button onClick={() => cancelSelectActivity()} basic color="grey" content="Cancel" />
-                    </Button.Group>
-                </CardContent>
-            </Card>
-        )
-    }
-    else {
-        return <></>
-    }
-}
-
-export default ActivityDetails
+export default observer(ActivityDetails)
