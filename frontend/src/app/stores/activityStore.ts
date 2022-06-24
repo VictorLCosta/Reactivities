@@ -5,7 +5,7 @@ import agent from '../api/agent'
 import { Activity } from '../models/activity'
 
 class ActivityStore {
-    activities: Activity[] = []
+    activityRegistry = new Map<string, Activity>()
     activity: Activity | undefined = undefined
     editMode = false
     loading = false
@@ -15,13 +15,17 @@ class ActivityStore {
         makeAutoObservable(this)
     }
 
+    get activitiesByDate () {
+        return Array.from(this.activityRegistry.values()).sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
+    }
+
     loadActivities = async () => {
         this.setLoadingInitial(true)
         try {
             const activities = await agent.Activities.list();
             activities.forEach(item => {
                 item.date = item.date.split('T')[0]
-                this.activities.push(item)
+                this.activityRegistry.set(item.id, item)
             })
 
             this.setLoadingInitial(false)
@@ -37,7 +41,7 @@ class ActivityStore {
     }
 
     selectActivity = (id: string) => {
-        this.activity = this.activities.find(x => x.id === id)
+        this.activity = this.activityRegistry.get(id)
     }
 
     cancelSelectedActivity = () => {
@@ -60,7 +64,7 @@ class ActivityStore {
         try {
             await agent.Activities.create(activity)
             runInAction(() => {
-                this.activities.push(activity)
+                this.activityRegistry.set(activity.id, activity)
                 this.activity = activity
                 this.editMode = false
                 this.loading = false
@@ -79,9 +83,27 @@ class ActivityStore {
         try {
             await agent.Activities.update(activity)
             runInAction(() => {
-                this.activities = [...this.activities.filter(x => x.id !== activity.id), activity]
+                this.activityRegistry.set(activity.id, activity)
                 this.activity = activity
                 this.editMode = false
+                this.loading = false
+            })
+        } catch (error) {
+            console.log(error)
+            runInAction(() => {
+                this.loading = false
+            })
+        }
+    }
+
+    deleteActivity = async (id: string) => {
+        this.loading = true
+
+        try {
+            await agent.Activities.delete(id)
+            runInAction(() => {
+                this.activityRegistry.delete(id)
+                if (this.activity?.id === id) this.cancelSelectedActivity()
                 this.loading = false
             })
         } catch (error) {

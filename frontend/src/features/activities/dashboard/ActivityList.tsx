@@ -1,19 +1,14 @@
-import { Button, Item, ItemHeader, Label, Segment } from "semantic-ui-react"
+import { Button, Item, Label, Segment } from "semantic-ui-react"
 import moment from 'moment'
 
-import { Activity } from './../../../app/models/activity';
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
-interface Props {
-    activities: Activity[],
-    delete: (id: string) => void,
-    submitting: boolean
-}
-
-const ActivityList = ({activities, delete: deleteActivity, submitting}: Props) => {
+const ActivityList = () => {
     const {activityStore} = useStore()
+    const {activitiesByDate, deleteActivity, loading} = activityStore
+
     const [target, setTarget] = useState('')
 
     function handleDelete (event: SyntheticEvent<HTMLButtonElement>, id: string) {
@@ -24,7 +19,7 @@ const ActivityList = ({activities, delete: deleteActivity, submitting}: Props) =
     return (
         <Segment>
             <Item.Group divided>
-                {activities.map(item => (
+                {activitiesByDate.map(item => (
                     <Item key={item.id}>
                         <Item.Content>
                             <Item.Header as='a'>{item.title}</Item.Header>
@@ -35,7 +30,7 @@ const ActivityList = ({activities, delete: deleteActivity, submitting}: Props) =
                             </Item.Description>
                             <Item.Extra>
                                 <Button onClick={() => activityStore.selectActivity(item.id)} floated='right' content="View" color="blue" />
-                                <Button name={item.id} loading={submitting && target == item.id} onClick={(e) => handleDelete(e, item.id)} floated='right' content="Delete" color="red" />
+                                <Button name={item.id} loading={loading && target == item.id} onClick={(e) => handleDelete(e, item.id)} floated='right' content="Delete" color="red" />
                                 <Label basic content={item.category} />
                             </Item.Extra>
                         </Item.Content>

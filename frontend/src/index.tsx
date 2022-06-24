@@ -1,5 +1,6 @@
 import ReactDOM  from "react-dom/client";
 import App from "./app/layout/App";
+import { BrowserRouter } from "react-router-dom";
 
 import { store, StoreContext } from "./app/stores/store";
 
@@ -9,6 +10,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <StoreContext.Provider value={store}>
-        <App/>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
     </StoreContext.Provider>
 )
