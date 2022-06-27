@@ -1,8 +1,7 @@
 import { Button, Card, CardContent, Image } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
-import moment from 'moment'
 import { observer } from 'mobx-react-lite';
-
+import moment from 'moment'
 
 const ActivityDetails = (props: any) => {
     const { activityStore } = useStore()
@@ -12,7 +11,7 @@ const ActivityDetails = (props: any) => {
 
     return (
         <Card fluid>
-            <Image href={`/assets/categoryImages/${activity.category}.jpg`} />
+            <Image href={`/assets/categoryImages/${activity.category}`} fluid />
             <CardContent>
                 <Card.Header>{activity.title}</Card.Header>
                 <Card.Meta>
