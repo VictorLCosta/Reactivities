@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite"
 import { Button, Container, Menu } from "semantic-ui-react"
 import { useStore } from "../stores/store"
 
-const Navbar = (props: any) => {
+const Navbar = () => {
     const {activityStore} = useStore()
 
     return (
