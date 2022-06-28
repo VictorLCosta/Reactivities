@@ -24,8 +24,7 @@ class ActivityStore {
         try {
             const activities = await agent.Activities.list();
             activities.forEach(item => {
-                item.date = item.date.split('T')[0]
-                this.activityRegistry.set(item.id, item)
+                this.setActivity(item)
             })
 
             this.setLoadingInitial(false)
@@ -40,21 +39,30 @@ class ActivityStore {
         this.loadingInitial = state
     }
 
-    selectActivity = (id: string) => {
-        this.activity = this.activityRegistry.get(id)
+    loadActivity = async (id: string) => {
+        let activity = this.getActivity(id)
+        if (activity) {
+            this.activity = activity
+        } else {
+            this.loading = true
+            try {
+                activity = await agent.Activities.details(id)
+                this.setActivity(activity)
+                this.setLoadingInitial(false)
+            } catch (error) {
+                console.log(error)
+                this.loadingInitial = false
+            }
+        }
     }
 
-    cancelSelectedActivity = () => {
-        this.activity = undefined
+    private setActivity = (activity: Activity) => {
+        activity.date = activity.date.split('T')[0]
+        this.activityRegistry.set(activity.id, activity)
     }
 
-    openForm = (id?: string) => {
-        id ? this.selectActivity(id) : this.cancelSelectedActivity()
-        this.editMode = true
-    }
-
-    closeForm = () => {
-        this.editMode = false
+    private getActivity = (id: string) => {
+        return this.activityRegistry.get(id)
     }
 
     createActivity = async (activity: Activity) => {
@@ -103,7 +111,6 @@ class ActivityStore {
             await agent.Activities.delete(id)
             runInAction(() => {
                 this.activityRegistry.delete(id)
-                if (this.activity?.id === id) this.cancelSelectedActivity()
                 this.loading = false
             })
         } catch (error) {

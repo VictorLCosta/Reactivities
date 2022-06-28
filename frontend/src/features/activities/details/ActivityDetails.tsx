@@ -5,7 +5,7 @@ import moment from 'moment'
 
 const ActivityDetails = (props: any) => {
     const { activityStore } = useStore()
-    const { activity, openForm, cancelSelectedActivity } = activityStore
+    const { activity } = activityStore
 
     if (!activity) return <></>;
 
@@ -23,8 +23,8 @@ const ActivityDetails = (props: any) => {
             </CardContent>
             <CardContent extra>
                 <Button.Group widths="2">
-                    <Button onClick={() => openForm(activity.id)} basic color="blue" content="Edit" />
-                    <Button onClick={() => cancelSelectedActivity()} basic color="grey" content="Cancel" />
+                    <Button basic color="blue" content="Edit" />
+                    <Button basic color="grey" content="Cancel" />
                 </Button.Group>
             </CardContent>
         </Card>

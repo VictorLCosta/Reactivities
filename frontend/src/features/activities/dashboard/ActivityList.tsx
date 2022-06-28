@@ -4,6 +4,7 @@ import moment from 'moment'
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
 
 const ActivityList = () => {
     const {activityStore} = useStore()
@@ -29,7 +30,7 @@ const ActivityList = () => {
                                 <div>{item.city}, {item.venue}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button onClick={() => activityStore.selectActivity(item.id)} floated='right' content="View" color="blue" />
+                                <Button as={Link} to={`/activities/${item.id}`} floated='right' content="View" color="blue" />
                                 <Button name={item.id} loading={loading && target == item.id} onClick={(e) => handleDelete(e, item.id)} floated='right' content="Delete" color="red" />
                                 <Label basic content={item.category} />
                             </Item.Extra>
