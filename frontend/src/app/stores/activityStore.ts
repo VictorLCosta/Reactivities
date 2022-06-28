@@ -47,8 +47,11 @@ class ActivityStore {
             this.loading = true
             try {
                 activity = await agent.Activities.details(id)
-                this.setActivity(activity)
-                this.setLoadingInitial(false)
+                runInAction(() => {
+                    this.setActivity(activity!)
+                    this.activity = activity
+                    this.setLoadingInitial(false)
+                })
             } catch (error) {
                 console.log(error)
                 this.loadingInitial = false
