@@ -8,7 +8,7 @@ import moment from 'moment'
 
 import Loading from '../../../app/layout/Loading';
 
-const ActivityDetails = (props: any) => {
+const ActivityDetails = () => {
     const { activityStore } = useStore()
     const { activity, loadActivity, loadingInitial } = activityStore
     const {id} = useParams<{id: string}>()
