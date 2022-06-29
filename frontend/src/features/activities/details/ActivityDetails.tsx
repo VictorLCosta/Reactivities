@@ -3,6 +3,7 @@ import { Button, Card, CardContent, Image } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
 import moment from 'moment'
 
 import Loading from '../../../app/layout/Loading';
@@ -32,7 +33,7 @@ const ActivityDetails = (props: any) => {
             </CardContent>
             <CardContent extra>
                 <Button.Group widths="2">
-                    <Button basic color="blue" content="Edit" />
+                    <Button as={Link} to={`/manage/${activity.id}`} basic color="blue" content="Edit" />
                     <Button basic color="grey" content="Cancel" />
                 </Button.Group>
             </CardContent>

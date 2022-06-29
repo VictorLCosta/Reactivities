@@ -43,6 +43,7 @@ class ActivityStore {
         let activity = this.getActivity(id)
         if (activity) {
             this.activity = activity
+            return activity;
         } else {
             this.loading = true
             try {
@@ -51,10 +52,13 @@ class ActivityStore {
                     this.setActivity(activity!)
                     this.activity = activity
                     this.setLoadingInitial(false)
+                    this.loading = false
                 })
+                return activity
             } catch (error) {
                 console.log(error)
                 this.loadingInitial = false
+                this.loading = false
             }
         }
     }
