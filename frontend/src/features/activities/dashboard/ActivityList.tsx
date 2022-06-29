@@ -6,8 +6,8 @@ import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
 const ActivityList = () => {
-    const {activityStore} = useStore()
-    const {groupedActivities} = activityStore
+    const { activityStore } = useStore()
+    const { groupedActivities } = activityStore
 
     return (
         <>
@@ -16,13 +16,10 @@ const ActivityList = () => {
                     <Header sub color="teal">
                         {group}
                     </Header>
-                    <Segment>
-                        <Item.Group divided>
-                            {activities.map((item, i) => (
-                                <ActivityListItem key={i} activity={item}/>
-                            ))}
-                        </Item.Group>
-                    </Segment>
+                    
+                    {activities.map((item, i) => (
+                        <ActivityListItem key={i} activity={item} />
+                    ))}
                 </Fragment>
             ))}
         </>
