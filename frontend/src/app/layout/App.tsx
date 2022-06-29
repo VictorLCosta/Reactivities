@@ -15,13 +15,20 @@ const App = () => {
 
     return (
         <>
-            <Navbar/>
-            <Container style={{marginTop: '5em'}}>
-                <Route path="/" exact component={HomePage}/>
-                <Route path="/activities" exact component={ActivityDashboard}/>
-                <Route path="/activities/:id" component={ActivityDetails}/>
-                <Route key={location.key} path={["/createActivity", "/manage/:id"]} component={ActivityForm}/>
-            </Container>
+            <Route path="/" exact component={HomePage}/>
+            <Route 
+                path="/(.+)"
+                render={() => (
+                    <>
+                        <Navbar/>
+                        <Container style={{marginTop: '5em'}}>
+                            <Route path="/activities" exact component={ActivityDashboard}/>
+                            <Route path="/activities/:id" component={ActivityDetails}/>
+                            <Route key={location.key} path={["/createActivity", "/manage/:id"]} component={ActivityForm}/>
+                        </Container>
+                    </>
+                )}
+            />
         </>
     )
 }
