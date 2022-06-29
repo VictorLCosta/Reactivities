@@ -8,9 +8,10 @@ import { useEffect } from "react";
 
 const ActivityDashboard = () => {
     const {activityStore} = useStore()
+    const {activityRegistry, loadActivities} = activityStore
 
     useEffect(() => {
-        activityStore.loadActivities()
+        if (activityRegistry.size === 0) loadActivities()
     }, [activityStore])
 
     if (activityStore.loadingInitial) return <Loading content="Loading app"/>

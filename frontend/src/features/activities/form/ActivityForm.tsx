@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router"
 import { Button, Form, Segment } from "semantic-ui-react"
 import { useStore } from "../../../app/stores/store"
 import { v4 as uuid } from "uuid"
+import { Link } from "react-router-dom"
 
 const ActivityForm = () => {
     const history = useHistory()
@@ -52,7 +53,7 @@ const ActivityForm = () => {
                 <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
                 <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
                 <Button loading={loading} floated="right" positive type="submit" content="Submit" />
-                <Button floated="right" type="button" content="Cancel" />
+                <Button as={Link} to="/activities" floated="right" type="button" content="Cancel" />
             </Form>
         </Segment>
     )
