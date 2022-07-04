@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.CrossCutting.DependencyInjection;
 using Api.Data.Transaction;
+using Api.Services.Activitities;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,7 +41,10 @@ namespace Application
                 });
             });
 
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(config => 
+            {
+                config.RegisterValidatorsFromAssemblyContaining<Create>();
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Application", Version = "v1" });
