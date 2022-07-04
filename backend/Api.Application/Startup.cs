@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Application.Middlewares;
 using Api.CrossCutting.DependencyInjection;
 using Api.Data.Transaction;
 using Api.Services.Activitities;
@@ -53,6 +54,8 @@ namespace Application
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ExceptionMiddleware>();
+
             app.Use(async (context, next) =>
             {
                 await next.Invoke();
