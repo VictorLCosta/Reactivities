@@ -3,15 +3,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Api.Data.Transaction;
 using Api.Domain.Entities;
+using Api.Services.Core;
 using MediatR;
 
 namespace Api.Services.Activitities
 {
     public class List
     {
-        public class Query : IRequest<IEnumerable<Activity>> {}
+        public class Query : IRequest<Result<IEnumerable<Activity>>> {}
 
-        public class Handler : IRequestHandler<Query, IEnumerable<Activity>>
+        public class Handler : IRequestHandler<Query, Result<IEnumerable<Activity>>>
         {
             private readonly IUow _unitOfWork;
 
@@ -20,9 +21,9 @@ namespace Api.Services.Activitities
                 _unitOfWork = unitOfWork;
             }
 
-            public async Task<IEnumerable<Activity>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<IEnumerable<Activity>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _unitOfWork.Activities.GetAllAsync();
+                return Result<IEnumerable<Activity>>.Success(await _unitOfWork.Activities.GetAllAsync());
             }
         }
     }

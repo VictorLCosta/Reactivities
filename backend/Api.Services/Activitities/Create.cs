@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Api.Data.Transaction;
 using Api.Domain.Entities;
+using Api.Services.Core;
 using Api.Services.Validators;
 using FluentValidation;
 using MediatR;
@@ -10,7 +11,7 @@ namespace Api.Services.Activitities
 {
     public class Create
     {
-        public class Command : IRequest 
+        public class Command : IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
         }
@@ -23,7 +24,7 @@ namespace Api.Services.Activitities
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly IUow _unitOfWork;
 
@@ -32,11 +33,11 @@ namespace Api.Services.Activitities
                 _unitOfWork = unitOfWork;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 await _unitOfWork.Activities.AddAsync(request.Activity);
 
-                return Unit.Value;
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }
