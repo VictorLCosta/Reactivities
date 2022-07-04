@@ -2,18 +2,19 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Api.Data.Transaction;
+using Api.Services.Core;
 using MediatR;
 
 namespace Api.Services.Activitities
 {
     public class Delete
     {
-        public class Command : IRequest 
+        public class Command : IRequest<Result<Unit>> 
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command> 
+        public class Handler : IRequestHandler<Command, Result<Unit>> 
         {
             private readonly IUow _unitOfWork;
 
@@ -22,11 +23,13 @@ namespace Api.Services.Activitities
                 _unitOfWork = unitOfWork;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                await _unitOfWork.Activities.Remove(request.Id);
+                var result = await _unitOfWork.Activities.Remove(request.Id);
 
-                return Unit.Value;
+                if (!result) return Result<Unit>.Failed("Failed to delete the activity");
+
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }
