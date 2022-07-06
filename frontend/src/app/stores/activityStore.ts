@@ -65,8 +65,7 @@ class ActivityStore {
                 })
                 return activity
             } catch (error) {
-                console.log(error)
-                this.loadingInitial = false
+                this.setLoadingInitial(false)
                 this.loading = false
             }
         }
