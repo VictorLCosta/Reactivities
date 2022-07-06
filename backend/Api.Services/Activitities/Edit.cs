@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Api.Data.Transaction;
 using Api.Domain.Entities;
 using Api.Services.Core;
+using Api.Services.Validators;
+using FluentValidation;
 using MediatR;
 
 namespace Api.Services.Activitities
@@ -12,6 +14,14 @@ namespace Api.Services.Activitities
         public class Command : IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
+            }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
