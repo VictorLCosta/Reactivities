@@ -5,9 +5,10 @@ import { Button, FormField, Label, Segment } from "semantic-ui-react"
 import { useStore } from "../../../app/stores/store"
 import { v4 as uuid } from "uuid"
 import { Link } from "react-router-dom"
-import { Formik, Form, Field, ErrorMessage } from "formik"
+import { Formik, Form } from "formik"
 import * as Yup from 'yup'
 import MyTextInput from "../../../app/common/form/MyTextInput"
+import MyDateInput from './../../../app/common/form/MyDateInput';
 
 const ActivityForm = () => {
     const history = useHistory()
@@ -27,7 +28,7 @@ const ActivityForm = () => {
 
     const validationSchema = Yup.object({
         title: Yup.string().required('The activity title is required'),
-        date: Yup.string().required('The date title is required'),
+        date: Yup.date().required("The activity date is required"),
         description: Yup.string().required('The description title is required'),
         category: Yup.string().required('The activity category is required'),
         city: Yup.string().required('The activity city is required'),
@@ -63,7 +64,7 @@ const ActivityForm = () => {
                         <MyTextInput placeholder="Title" name="title"/>
                         <MyTextInput placeholder="Description" name="description" />
                         <MyTextInput placeholder="Category" name="category" />
-                        <MyTextInput placeholder="Date" name="date" />
+                        <MyDateInput name="date" placeholderText="Date" showTimeSelect timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" />
                         <MyTextInput placeholder="City" name="city" />
                         <MyTextInput placeholder="Venue" name="venue" />
                         <Button loading={loading} floated="right" positive type="submit" content="Submit" />

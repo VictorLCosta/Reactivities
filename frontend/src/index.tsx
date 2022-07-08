@@ -1,6 +1,7 @@
 import ReactDOM  from "react-dom/client";
 import 'react-calendar/dist/Calendar.css'
 import 'react-toastify/dist/ReactToastify.min.css'
+import 'react-datepicker/dist/react-datepicker.css'
 import App from "./app/layout/App";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from 'history';
