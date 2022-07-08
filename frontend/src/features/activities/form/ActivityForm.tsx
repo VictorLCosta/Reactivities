@@ -9,6 +9,7 @@ import { Formik, Form } from "formik"
 import * as Yup from 'yup'
 import MyTextInput from "../../../app/common/form/MyTextInput"
 import MyDateInput from './../../../app/common/form/MyDateInput';
+import MyTextArea from "../../../app/common/form/MyTextarea"
 
 const ActivityForm = () => {
     const history = useHistory()
@@ -62,7 +63,7 @@ const ActivityForm = () => {
                 {({ handleSubmit }) => (
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
                         <MyTextInput placeholder="Title" name="title"/>
-                        <MyTextInput placeholder="Description" name="description" />
+                        <MyTextArea placeholder="Description" name="description" />
                         <MyTextInput placeholder="Category" name="category" />
                         <MyDateInput name="date" placeholderText="Date" showTimeSelect timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" />
                         <MyTextInput placeholder="City" name="city" />
