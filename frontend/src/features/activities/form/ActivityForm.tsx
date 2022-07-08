@@ -10,6 +10,8 @@ import * as Yup from 'yup'
 import MyTextInput from "../../../app/common/form/MyTextInput"
 import MyDateInput from './../../../app/common/form/MyDateInput';
 import MyTextArea from "../../../app/common/form/MyTextarea"
+import MySelectInput from "../../../app/common/form/MySelectInput"
+import { categoryOptions } from "../../../app/common/options/categoryOptions"
 
 const ActivityForm = () => {
     const history = useHistory()
@@ -64,7 +66,7 @@ const ActivityForm = () => {
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
                         <MyTextInput placeholder="Title" name="title"/>
                         <MyTextArea placeholder="Description" name="description" />
-                        <MyTextInput placeholder="Category" name="category" />
+                        <MySelectInput options={categoryOptions} placeholder="Category" name="category" />
                         <MyDateInput name="date" placeholderText="Date" showTimeSelect timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" />
                         <MyTextInput placeholder="City" name="city" />
                         <MyTextInput placeholder="Venue" name="venue" />
