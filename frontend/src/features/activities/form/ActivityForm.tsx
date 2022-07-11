@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
-import { Button, Segment } from "semantic-ui-react"
+import { Button, Header, Segment } from "semantic-ui-react"
 import { useStore } from "../../../app/stores/store"
 import { v4 as uuid } from "uuid"
 import { Link } from "react-router-dom"
@@ -43,7 +43,7 @@ const ActivityForm = () => {
         if (id) loadActivity(id).then(activity => setActivity(activity!))
     }, [id, loadActivity])
 
-    /*function handleSubmit() {
+    function handleFormSubmit(values: Activity) {
         if (activity.id.length === 0) {
             let newActivity = {
                 ...activity,
@@ -53,25 +53,26 @@ const ActivityForm = () => {
         } else {
             updateActivity(activity).then(() => history.push(`/activities/${activity.id}`))
         }
-    }
-
-    function handleInputChange (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        const {name, value} = event.target
-        setActivity({...activity, [name]: value})
-    }*/
+    }    
 
     return (
         <Segment clearing>
-            <Formik validationSchema={validationSchema} enableReinitialize initialValues={activity} onSubmit={values => console.log(values)}>
-                {({ handleSubmit }) => (
+            <Header content="Activity Details" sub color="teal"/>
+            <Formik validationSchema={validationSchema} enableReinitialize initialValues={activity} onSubmit={values => handleFormSubmit(values)}>
+                {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
                         <MyTextInput placeholder="Title" name="title"/>
                         <MyTextArea placeholder="Description" name="description" />
                         <MySelectInput options={categoryOptions} placeholder="Category" name="category" />
                         <MyDateInput name="date" placeholderText="Date" showTimeSelect timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" />
+                        <Header content="Location Details" sub color="teal"/>
                         <MyTextInput placeholder="City" name="city" />
                         <MyTextInput placeholder="Venue" name="venue" />
-                        <Button loading={loading} floated="right" positive type="submit" content="Submit" />
+                        <Button 
+                            disabled={isSubmitting || !dirty || !isValid}
+                            loading={loading} floated="right" 
+                            positive type="submit" content="Submit" 
+                        />
                         <Button as={Link} to="/activities" floated="right" type="button" content="Cancel" />
                     </Form>
                 )}

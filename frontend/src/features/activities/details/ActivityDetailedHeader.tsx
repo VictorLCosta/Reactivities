@@ -31,7 +31,7 @@ const ActivityDetailedHeader = ({activity}: Props) => {
                         <Item>
                             <Item.Content>
                                 <Header size="huge" content={activity.title} style={{color: 'white'}}/>
-                                <p>{format(activity.date!, "dd MMM yyyy h:mm aa")}</p>
+                                <p>{format(activity.date!, "dd MMM yyyy")}</p>
                                 <p>
                                     Hosted by <strong>Bob</strong>
                                 </p>
