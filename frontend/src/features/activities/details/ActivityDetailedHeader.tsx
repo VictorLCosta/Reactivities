@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
 import { Segment, Image, Item, Header, Button } from "semantic-ui-react"
 import { Activity } from "../../../app/models/activity"
+import { format } from 'date-fns'
 
 const activityImageStyle = {
     filter: 'brightness(30%)'
@@ -30,7 +31,7 @@ const ActivityDetailedHeader = ({activity}: Props) => {
                         <Item>
                             <Item.Content>
                                 <Header size="huge" content={activity.title} style={{color: 'white'}}/>
-                                <p>{activity.date}</p>
+                                <p>{format(activity.date!, "dd MMM yyyy h:mm aa")}</p>
                                 <p>
                                     Hosted by <strong>Bob</strong>
                                 </p>

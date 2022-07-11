@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
-import { Button, FormField, Label, Segment } from "semantic-ui-react"
+import { Button, Segment } from "semantic-ui-react"
 import { useStore } from "../../../app/stores/store"
 import { v4 as uuid } from "uuid"
 import { Link } from "react-router-dom"
@@ -12,6 +12,7 @@ import MyDateInput from './../../../app/common/form/MyDateInput';
 import MyTextArea from "../../../app/common/form/MyTextarea"
 import MySelectInput from "../../../app/common/form/MySelectInput"
 import { categoryOptions } from "../../../app/common/options/categoryOptions"
+import { Activity } from './../../../app/models/activity';
 
 const ActivityForm = () => {
     const history = useHistory()
@@ -19,12 +20,12 @@ const ActivityForm = () => {
     const {loadActivity, createActivity, updateActivity, loading} = activityStore
     const {id} = useParams<{id: string}>()
 
-    const [activity, setActivity] = useState({
+    const [activity, setActivity] = useState<Activity>({
         id: '',
         title: '',
         category: '',
         description: '',
-        date: '',
+        date: null,
         city: '',
         venue: ''
     })
