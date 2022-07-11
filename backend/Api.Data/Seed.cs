@@ -2,14 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data
 {
     public class Seed
     {
-        public static async Task SeedData(ApplicationDbContext context)
+        public static async Task SeedData(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
+            if(!await userManager.Users.AnyAsync())
+            {
+                var users = new List<AppUser> 
+                {
+                    new AppUser {DisplayName = "Janete", UserName = "janete", Email = "janete@test.com"},
+                    new AppUser {DisplayName = "Tom", UserName = "tom", Email = "tom@test.com"},
+                    new AppUser {DisplayName = "Bob", UserName = "bob", Email = "bob@test.com"}
+                };
+
+                foreach (var user in users)
+                {
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                }
+            }
+
             if(await context.Activities.AnyAsync()) return;
 
             var activities = new List<Activity>()
