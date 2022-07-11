@@ -32,6 +32,7 @@ namespace Application
         {
             services.AddDataDependencies(_config);
             services.AddServicesDependencies(_config);
+            services.AddIdentityDependencies(_config);
 
             services.AddCors(opt => {
                 opt.AddDefaultPolicy(policy => {
