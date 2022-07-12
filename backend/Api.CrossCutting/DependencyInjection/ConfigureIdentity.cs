@@ -21,7 +21,9 @@ namespace Api.CrossCutting.DependencyInjection
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddSignInManager<SignInManager<AppUser>>();
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("r75^zh{[]xst*H^T*'j-;\"Ssmvp;`ENLrL-XZ[&X)eUrYS2Um)Zy;b![.1\"e/4d"));
+            var s = config["Jwt:Key"];
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(s));
 
             services.AddAuthentication(opt => {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
