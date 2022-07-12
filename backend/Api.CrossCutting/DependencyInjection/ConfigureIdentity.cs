@@ -1,5 +1,6 @@
 using Api.Data;
 using Api.Domain.Entities;
+using Api.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ namespace Api.CrossCutting.DependencyInjection
             .AddSignInManager<SignInManager<AppUser>>();
 
             services.AddAuthentication();
+            services.AddScoped<TokenService>();
 
             return services;
         }
