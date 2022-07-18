@@ -1,4 +1,5 @@
 import { ErrorMessage, Form, Formik } from "formik"
+import { observer } from "mobx-react-lite"
 import { Button, Label } from "semantic-ui-react"
 import MyTextInput from "../../app/common/form/MyTextInput"
 import { useStore } from "../../app/stores/store"
@@ -23,4 +24,4 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm
+export default observer(LoginForm)
