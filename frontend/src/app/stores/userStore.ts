@@ -22,6 +22,7 @@ class UserStore {
             runInAction(() => {
                 this.currentUser = user
             })
+            store.modalStore.closeModal()
             history.push('/activities')
         } catch (error) {
             throw error

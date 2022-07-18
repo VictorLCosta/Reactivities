@@ -18,6 +18,7 @@ import { Switch } from 'react-router-dom';
 import { useStore } from '../stores/store';
 import { useEffect } from 'react';
 import Loading from './Loading';
+import ModalContainer from '../common/modals/ModalContainer';
 
 const App = () => {
     const location = useLocation()
@@ -36,6 +37,7 @@ const App = () => {
     return (
         <>
             <ToastContainer position="bottom-right" hideProgressBar/>
+            <ModalContainer />
             <Route path="/" exact component={HomePage}/>
             <Route 
                 path="/(.+)"
