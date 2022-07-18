@@ -15,9 +15,23 @@ import './styles.css'
 import { observer } from 'mobx-react-lite';
 import { Route, useLocation } from 'react-router';
 import { Switch } from 'react-router-dom';
+import { useStore } from '../stores/store';
+import { useEffect } from 'react';
+import Loading from './Loading';
 
 const App = () => {
     const location = useLocation()
+    const {commonStore, userStore} = useStore()
+
+    useEffect(() => {
+        if (commonStore.token) {
+            userStore.getUser().finally(() => commonStore.setAppLoaded())
+        } else {
+            commonStore.setAppLoaded()
+        }
+    }, [commonStore, userStore])
+
+    if(!commonStore.appLoaded) return <Loading content="Loading component..."/>
 
     return (
         <>

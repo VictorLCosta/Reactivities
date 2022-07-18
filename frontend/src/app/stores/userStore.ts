@@ -34,6 +34,15 @@ class UserStore {
         this.currentUser = null
         history.push('/')
     }
+
+    getUser = async () => {
+        try {
+            const user = await agent.Account.current()
+            runInAction(() => this.currentUser = user)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 export default UserStore
