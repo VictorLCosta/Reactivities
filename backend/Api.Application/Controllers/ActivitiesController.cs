@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Application.Controllers
 {
+    [AllowAnonymous]
     public class ActivitiesController : BaseApiController
     {
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetActivities()
         {
