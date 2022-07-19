@@ -29,6 +29,18 @@ class UserStore {
         }
     }
 
+    register = async (creds: UserFormValues) => {
+        try {
+            var user = await agent.Account.register(creds)
+            store.commonStore.setToken(user.token)
+            runInAction(() => this.currentUser = user)
+            store.modalStore.closeModal()
+            history.push('/activities')
+        } catch (error) {
+            throw error            
+        }
+    }
+
     logout = () => {
         store.commonStore.setToken(null)
         window.localStorage.removeItem('jwt')
