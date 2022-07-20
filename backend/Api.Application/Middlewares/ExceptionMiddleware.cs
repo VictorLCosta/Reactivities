@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Api.Services.Core;
+using Api.Services.Application.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

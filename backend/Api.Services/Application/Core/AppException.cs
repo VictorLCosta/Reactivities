@@ -1,4 +1,4 @@
-namespace Api.Services.Core
+namespace Api.Services.Application.Core
 {
     public class AppException
     {

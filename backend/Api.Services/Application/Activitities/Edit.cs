@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Api.Data.Transaction;
 using Api.Domain.Entities;
-using Api.Services.Core;
+using Api.Services.Application.Core;
 using Api.Services.Validators;
 using FluentValidation;
 using MediatR;

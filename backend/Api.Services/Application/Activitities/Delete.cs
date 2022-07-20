@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Api.Data.Transaction;
-using Api.Services.Core;
+using Api.Services.Application.Core;
 using MediatR;
 
 namespace Api.Services.Application.Activitities
