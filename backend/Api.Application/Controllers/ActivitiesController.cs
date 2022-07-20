@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Api.Domain.Entities;
-using Api.Services.Activitities;
+using Api.Services.Application.Activitities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

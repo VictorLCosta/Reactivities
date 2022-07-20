@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Api.Application.Middlewares;
 using Api.CrossCutting.DependencyInjection;
 using Api.Data.Transaction;
-using Api.Services.Activitities;
+using Api.Services.Application.Activitities;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

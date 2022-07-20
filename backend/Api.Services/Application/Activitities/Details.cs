@@ -6,7 +6,7 @@ using Api.Domain.Entities;
 using Api.Services.Core;
 using MediatR;
 
-namespace Api.Services.Activitities
+namespace Api.Services.Application.Activitities
 {
     public class Details
     {

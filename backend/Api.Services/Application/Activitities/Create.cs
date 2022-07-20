@@ -7,7 +7,7 @@ using Api.Services.Validators;
 using FluentValidation;
 using MediatR;
 
-namespace Api.Services.Activitities
+namespace Api.Services.Application.Activitities
 {
     public class Create
     {

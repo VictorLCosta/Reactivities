@@ -1,5 +1,5 @@
 using Api.CrossCutting.AutoMapper;
-using Api.Services.Activitities;
+using Api.Services.Application.Activitities;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

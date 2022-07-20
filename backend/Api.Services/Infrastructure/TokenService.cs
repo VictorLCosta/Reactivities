@@ -7,7 +7,7 @@ using Api.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Api.Services.Services
+namespace Api.Services.Infrastructure
 {
     public class TokenService
     {

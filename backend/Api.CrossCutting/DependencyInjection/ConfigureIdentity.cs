@@ -1,7 +1,7 @@
 using System.Text;
 using Api.Data;
 using Api.Domain.Entities;
-using Api.Services.Services;
+using Api.Services.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
