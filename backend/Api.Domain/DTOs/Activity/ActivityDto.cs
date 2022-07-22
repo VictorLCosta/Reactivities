@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Api.Domain.DTOs.Profile;
 
-namespace Api.Domain.Entities
+namespace Api.Domain.DTOs.Activity
 {
-    public class Activity : BaseEntity
+    public class ActivityDto
     {
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public DateTime Date { get; set; }
         public string Text { get; set; }
@@ -12,7 +14,8 @@ namespace Api.Domain.Entities
         public string Category { get; set; }
         public string City { get; set; }
         public string Venue { get; set; }
+        public string HostUsername { get; set; }
 
-        public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
+        public ICollection<ProfileDto> Profiles { get; set; }
     }
 }
