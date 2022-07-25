@@ -1,4 +1,6 @@
+using System.Linq;
 using Api.Domain.DTOs.Activity;
+using Api.Domain.DTOs.Profile;
 using Api.Domain.Entities;
 using AutoMapper;
 
@@ -12,6 +14,13 @@ namespace Api.CrossCutting.AutoMapper
                 .ReverseMap();
 
             CreateMap<Activity, ActivityDto>()
+                .ForMember(x => x.HostUsername, opt => opt.MapFrom(src => src.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName))
+                .ReverseMap();
+
+            CreateMap<ActivityAttendee, ProfileDto>()
+                .ForMember(x => x.DisplayName, opt => opt.MapFrom(src => src.AppUser.DisplayName))
+                .ForMember(x => x.Username, opt => opt.MapFrom(src => src.AppUser.UserName))
+                .ForMember(x => x.Bio, opt => opt.MapFrom(src => src.AppUser.Bio))
                 .ReverseMap();
         }
     }

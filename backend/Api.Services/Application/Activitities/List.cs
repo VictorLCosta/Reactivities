@@ -6,7 +6,9 @@ using Api.Domain.DTOs.Activity;
 using Api.Domain.Entities;
 using Api.Services.Application.Core;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services.Application.Activitities
 {
@@ -27,11 +29,13 @@ namespace Api.Services.Application.Activitities
 
             public async Task<Result<IEnumerable<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var activities = await _unitOfWork.Activities.ListAllAsync();
+                var activities = await _unitOfWork
+                    .Activities
+                    .AsQueryable()
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
 
-                var result = _mapper.Map<IEnumerable<ActivityDto>>(activities);
-
-                return Result<IEnumerable<ActivityDto>>.Success(result);
+                return Result<IEnumerable<ActivityDto>>.Success(activities);
             }
         }
     }

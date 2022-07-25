@@ -52,6 +52,11 @@ namespace Api.Data.Repositories
             return entities;
         }
 
+        public IQueryable<T> AsQueryable()
+        {
+            return _context.Set<T>().AsQueryable();
+        }
+
         public async Task<bool> ExistAsync(Guid id)
         {
             return await _context.Set<T>().AnyAsync(x => x.Id.Equals(id));

@@ -6,6 +6,6 @@ namespace Api.Data.Interfaces
 {
     public interface IActivityRepository : IRepository<Activity>
     {
-        Task<IEnumerable<Activity>> ListAllAsync();
+        
     }
 }
