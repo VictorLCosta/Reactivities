@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Api.Domain.Entities;
 using Api.Services.Application.Activitities;
+using Api.Services.Application.Attendee;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,6 +45,12 @@ namespace Api.Application.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+        }
+
+        [HttpPost("{id}/attende")]
+        public async Task<IActionResult> Attende(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
         }
     }
 }
