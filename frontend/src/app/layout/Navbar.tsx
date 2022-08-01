@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite"
 import { Button, Container, Menu, Image, Dropdown } from "semantic-ui-react"
 import { Link, NavLink } from "react-router-dom"
 
-import logo from '../../../public/assets/logo.png'
+import logo from '../../assets/logo.png'
 import { useStore } from "../stores/store"
 
 const Navbar = () => {

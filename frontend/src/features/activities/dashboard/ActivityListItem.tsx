@@ -5,7 +5,7 @@ import { Activity } from "../../../app/models/activity"
 import { useStore } from './../../../app/stores/store'
 import { format } from "date-fns";
 
-import user from '../../../../public/assets/user.png'
+import user from '../../../assets/user.png'
 
 interface Props {
     activity: Activity

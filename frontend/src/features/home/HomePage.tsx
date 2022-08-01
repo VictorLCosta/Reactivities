@@ -4,8 +4,6 @@ import { useStore } from "../../app/stores/store"
 import LoginForm from "../users/LoginForm"
 import RegisterForm from "../users/RegisterForm"
 
-import logo from '../../../public/assets/logo.png'
-
 const HomePage = () => {
     const {userStore, modalStore} = useStore()
 
@@ -13,7 +11,7 @@ const HomePage = () => {
         <Segment inverted textAlign="center" vertical className="masthead">
             <Container text>
                 <Header as="h1" inverted>
-                    <Image size="massive" href={logo} alt="logo" style={{marginBottom: 12}}/>
+                    <Image size="massive" href='/assets/logo.png' alt="logo" style={{marginBottom: 12}}/>
                     Reactivities
                 </Header>
                 
