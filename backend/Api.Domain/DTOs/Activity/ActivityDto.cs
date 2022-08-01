@@ -15,7 +15,8 @@ namespace Api.Domain.DTOs.Activity
         public string City { get; set; }
         public string Venue { get; set; }
         public string HostUsername { get; set; }
+        public bool IsCancelled { get; set; }
 
-        public ICollection<ProfileDto> Profiles { get; set; }
+        public ICollection<ProfileDto> Attendees { get; set; }
     }
 }

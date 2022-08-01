@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Api.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services.Infrastructure.Security
 {
@@ -32,7 +33,9 @@ namespace Api.Services.Infrastructure.Security
             var activityId = Guid.Parse(_contextAccessor.HttpContext?.Request.RouteValues
                 .SingleOrDefault(x => x.Key == "id").Value?.ToString());
 
-            var attendee = _context.ActivityAttendees.FirstOrDefault(x => x.AppUserId == userId && x.ActivityId == activityId);
+            var attendee = _context.ActivityAttendees
+                .AsNoTracking()
+                .FirstOrDefault(x => x.AppUserId == userId && x.ActivityId == activityId);
 
             if (attendee == null) return Task.CompletedTask;
 

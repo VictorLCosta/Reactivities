@@ -15,6 +15,7 @@ namespace Api.CrossCutting.AutoMapper
 
             CreateMap<Activity, ActivityDto>()
                 .ForMember(x => x.HostUsername, opt => opt.MapFrom(src => src.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName))
+                .ForMember(x => x.IsCancelled, opt => opt.MapFrom(src => src.IsCanceled))
                 .ReverseMap();
 
             CreateMap<ActivityAttendee, ProfileDto>()
