@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Application.Controllers
 {
-    [AllowAnonymous]
     public class ActivitiesController : BaseApiController
     {
         [HttpGet]
@@ -48,6 +47,7 @@ namespace Api.Application.Controllers
         }
 
         [HttpPost("{id}/attende")]
+        [Authorize(Policy = "IsActivityHost")]
         public async Task<IActionResult> Attende(Guid id)
         {
             return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
