@@ -6,6 +6,7 @@ import { useStore } from './../../../app/stores/store'
 import { format } from "date-fns";
 
 import user from '../../../assets/user.png'
+import ActivityListItemAttendee from "./ActivityListItemAttendee";
 
 interface Props {
     activity: Activity
@@ -42,7 +43,7 @@ const ActivityListItem = ({activity}: Props) => {
                 </span>
             </Segment>
             <Segment secondary>
-                Attendes go Here
+                <ActivityListItemAttendee attendees={activity.attendees!}/>
             </Segment>
             <Segment clearing>
                 <span>{activity.description}</span>
