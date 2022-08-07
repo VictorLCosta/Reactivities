@@ -5,7 +5,6 @@ const webpack = require("webpack")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin")
 
 const config = {
     entry: path.resolve(__dirname, "..", "./src/index.tsx"),
@@ -71,11 +70,6 @@ const config = {
         }),
         new MiniCssExtractPlugin({
             filename: 'app.css'
-        }),
-        new CopyPlugin({
-            patterns: [
-                { from: path.resolve(__dirname, "..", "./src/assets"), to: 'build' }
-            ]
         }),
         new ForkTsCheckerWebpackPlugin({
             async: false,

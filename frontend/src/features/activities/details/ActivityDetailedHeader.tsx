@@ -40,12 +40,16 @@ const ActivityDetailedHeader = ({activity}: Props) => {
                     </Item.Group>
                 </Segment>
             </Segment>
-            <Segment clearing attached="bottom">
-                <Button color="teal">Join Activity</Button>
-                <Button>Cancel attendance</Button>
-                <Button as={Link} to={`/manage/${activity.id}`} color="orange" floated="right">
-                    Manage Event
-                </Button>
+            <Segment clearing attached="bottom">               
+                {activity.isHost ? (
+                    <Button as={Link} to={`/manage/${activity.id}`} color="orange" floated="right">
+                        Manage Event
+                    </Button>
+                ) : activity.isGoing ? (
+                    <Button>Cancel attendance</Button>
+                ) : (
+                    <Button color="teal">Join Activity</Button>
+                )}
             </Segment>
         </Segment.Group>
     )
