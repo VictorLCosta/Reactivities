@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 
 import { Activity } from '../models/activity'
 import { store } from './store'
+import { Profile } from '../models/profile'
 
 class ActivityStore {
     activityRegistry = new Map<string, Activity>()
@@ -142,6 +143,29 @@ class ActivityStore {
             runInAction(() => {
                 this.loading = false
             })
+        }
+    }
+
+    updateAttendance = async () => {
+        const user = store.userStore.currentUser
+        this.loading = true
+
+        try {
+            await agent.Activities.attend(this.activity!.id)
+            runInAction(() => {
+                if (this.activity?.isGoing) {
+                    this.activity.attendees = this.activity.attendees?.filter(a => a.username !== user?.username)
+                    this.activity.isGoing = false
+                } else {
+                    const attendee = new Profile(user!)
+                    this.activity?.attendees?.push(attendee)
+                }
+                this.activityRegistry.set(this.activity!.id, this.activity!)
+            })
+        } catch (error) {
+            console.log(error)
+        } finally {
+            runInAction(() => this.loading = false)
         }
     }
 }
