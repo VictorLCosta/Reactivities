@@ -12,7 +12,7 @@ import MyDateInput from './../../../app/common/form/MyDateInput';
 import MyTextArea from "../../../app/common/form/MyTextarea"
 import MySelectInput from "../../../app/common/form/MySelectInput"
 import { categoryOptions } from "../../../app/common/options/categoryOptions"
-import { Activity } from './../../../app/models/activity';
+import { Activity, ActivityFormValues } from './../../../app/models/activity';
 
 const ActivityForm = () => {
     const history = useHistory()
@@ -20,7 +20,7 @@ const ActivityForm = () => {
     const {loadActivity, createActivity, updateActivity, loading} = activityStore
     const {id} = useParams<{id: string}>()
 
-    const [activity, setActivity] = useState<Activity>({
+    const [activity, setActivity] = useState<ActivityFormValues>({
         id: '',
         title: '',
         category: '',
@@ -43,8 +43,8 @@ const ActivityForm = () => {
         if (id) loadActivity(id).then(activity => setActivity(activity!))
     }, [id, loadActivity])
 
-    function handleFormSubmit(values: Activity) {
-        if (activity.id.length === 0) {
+    function handleFormSubmit(activity: ActivityFormValues) {
+        if (!activity.id) {
             let newActivity = {
                 ...activity,
                 id: uuid()
@@ -70,7 +70,7 @@ const ActivityForm = () => {
                         <MyTextInput placeholder="Venue" name="venue" />
                         <Button 
                             disabled={isSubmitting || !dirty || !isValid}
-                            loading={loading} floated="right" 
+                            loading={isSubmitting} floated="right" 
                             positive type="submit" content="Submit" 
                         />
                         <Button as={Link} to="/activities" floated="right" type="button" content="Cancel" />
