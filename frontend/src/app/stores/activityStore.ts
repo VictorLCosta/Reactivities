@@ -166,6 +166,23 @@ class ActivityStore {
             runInAction(() => this.loading = false)
         }
     }
+
+    cancelActivityToggle = async () => {
+        this.loading = true
+
+        try {
+            await agent.Activities.attend(this.activity!.id)
+            runInAction(() => {
+                this.activity!.isCancelled = !this.activity?.isCancelled
+                this.activityRegistry.set(this.activity!.id, this.activity!)
+            })
+        } catch (error) {
+            console.log(error)
+        } finally {
+            runInAction(() => this.loading = false)
+        }
+    }
+
 }
 
 export default ActivityStore
