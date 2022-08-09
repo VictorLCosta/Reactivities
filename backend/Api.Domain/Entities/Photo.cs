@@ -1,0 +1,8 @@
+namespace Api.Domain.Entities
+{
+    public class Photo : BaseEntity
+    {
+        public string Url { get; set; }
+        public bool IsMain { get; set; }
+    }
+}
