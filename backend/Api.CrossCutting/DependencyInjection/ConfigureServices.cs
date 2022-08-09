@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Api.CrossCutting.AutoMapper;
 using Api.Services.Application.Activitities;
 using Api.Services.Infrastructure.Photos;
+using Api.Services.Infrastructure.Photos.Interfaces;
 using Api.Services.Infrastructure.Security;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -54,11 +55,9 @@ namespace Api.CrossCutting.DependencyInjection
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
-
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
             services.AddScoped<IUserAccessor, UserAccessor>();
-
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
             return services;
