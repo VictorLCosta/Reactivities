@@ -4,24 +4,22 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Api.Data;
-using Api.Domain.Entities;
 using Api.Services.Application.Core;
 using Api.Services.Infrastructure.Photos.Interfaces;
 using Api.Services.Infrastructure.Security;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services.Application.Photos
 {
-    public class Add
+    public class SetMain
     {
-        public class Command : IRequest<Result<Photo>> 
+        public class Command : IRequest<Result<Unit>>
         {
-            public IFormFile File { get; set; }
+            public string PublicId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Photo>>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly IUserAccessor _userAccessor;
             private readonly IPhotoAccessor _photoAccessor;
@@ -34,7 +32,7 @@ namespace Api.Services.Application.Photos
                 _context = context;
             }
 
-            public async Task<Result<Photo>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users
                     .Include(x => x.Photos)
@@ -42,23 +40,22 @@ namespace Api.Services.Application.Photos
 
                 if (user == null) return null;
 
-                var photoUploadResult = await _photoAccessor.AddPhoto(request.File);
+                var photo = user.Photos.FirstOrDefault(x => x.PublicId == request.PublicId);
 
-                if (photoUploadResult == null) return Result<Photo>.Failed("Photo is null");
+                if (photo == null) return null;
 
-                var photo = new Photo
-                {
-                    Url = photoUploadResult.Url,
-                    PublicId = photoUploadResult.PublicId
-                };
+                var currentMain = user.Photos.FirstOrDefault(x => x.IsMain);
 
-                if (!user.Photos.Any(x => x.IsMain)) photo.IsMain = true;
-                
-                user.Photos.Add(photo);
+                if (currentMain != null) currentMain.IsMain = false;
 
-                await _context.Photos.AddAsync(photo);
+                photo.IsMain = true;
 
-                return Result<Photo>.Success(photo);
+                _context.Users.Update(user);
+
+                _context.Photos.Update(photo);
+
+                return Result<Unit>.Success(Unit.Value);
+
             }
         }
     }

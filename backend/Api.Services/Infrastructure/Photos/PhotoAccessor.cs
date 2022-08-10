@@ -27,7 +27,7 @@ namespace Api.Services.Infrastructure.Photos
 
         public async Task<PhotoUploadResult> AddPhoto(IFormFile file)
         {
-            if (file.Length > 0) 
+            if (file?.Length > 0) 
             {
                 await using var stream = file.OpenReadStream();
                 var uploadParams = new ImageUploadParams
