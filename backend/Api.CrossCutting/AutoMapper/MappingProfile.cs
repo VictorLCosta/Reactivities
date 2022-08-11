@@ -23,6 +23,10 @@ namespace Api.CrossCutting.AutoMapper
                 .ForMember(x => x.Username, opt => opt.MapFrom(src => src.AppUser.UserName))
                 .ForMember(x => x.Bio, opt => opt.MapFrom(src => src.AppUser.Bio))
                 .ReverseMap();
+
+            CreateMap<AppUser, ProfileDto>()
+                .ForMember(x => x.Image, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
+                .ReverseMap();
         }
     }
 }

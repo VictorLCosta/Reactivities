@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Api.CrossCutting.AutoMapper;
 using Api.Services.Application.Activitities;
 using Api.Services.Infrastructure.Photos;
@@ -34,6 +35,8 @@ namespace Api.CrossCutting.DependencyInjection
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Application", Version = "v1" });
+
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
                     Description = "Enter the JWT token",
