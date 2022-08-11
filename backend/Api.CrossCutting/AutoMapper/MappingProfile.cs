@@ -18,10 +18,11 @@ namespace Api.CrossCutting.AutoMapper
                 .ForMember(x => x.IsCancelled, opt => opt.MapFrom(src => src.IsCanceled))
                 .ReverseMap();
 
-            CreateMap<ActivityAttendee, ProfileDto>()
+            CreateMap<ActivityAttendee, AttendeeDto>()
                 .ForMember(x => x.DisplayName, opt => opt.MapFrom(src => src.AppUser.DisplayName))
                 .ForMember(x => x.Username, opt => opt.MapFrom(src => src.AppUser.UserName))
                 .ForMember(x => x.Bio, opt => opt.MapFrom(src => src.AppUser.Bio))
+                .ForMember(x => x.Image, opt => opt.MapFrom(src => src.AppUser.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ReverseMap();
 
             CreateMap<AppUser, ProfileDto>()

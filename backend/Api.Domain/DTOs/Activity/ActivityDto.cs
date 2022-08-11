@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Api.Domain.DTOs.Profile;
 
 namespace Api.Domain.DTOs.Activity
 {
@@ -17,6 +16,6 @@ namespace Api.Domain.DTOs.Activity
         public string HostUsername { get; set; }
         public bool IsCancelled { get; set; }
 
-        public ICollection<ProfileDto> Attendees { get; set; }
+        public ICollection<AttendeeDto> Attendees { get; set; }
     }
 }
