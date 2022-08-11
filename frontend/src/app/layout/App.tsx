@@ -19,6 +19,7 @@ import { useStore } from '../stores/store';
 import { useEffect } from 'react';
 import Loading from './Loading';
 import ModalContainer from '../common/modals/ModalContainer';
+import ProfilePage from './../../features/profiles/ProfilePage';
 
 const App = () => {
     const location = useLocation()
@@ -49,6 +50,7 @@ const App = () => {
                                 <Route path="/activities" exact component={ActivityDashboard}/>
                                 <Route path="/activities/:id" component={ActivityDetails}/>
                                 <Route key={location.key} path={["/createActivity", "/manage/:id"]} component={ActivityForm}/>
+                                <Route path="/profile/:username" component={ProfilePage}/>
                                 <Route path="/errors" component={TestErrors}/>
                                 <Route path="/server-error" component={ServerError}/>
                                 <Route path="/login" component={LoginForm}/>
