@@ -16,7 +16,7 @@ const ProfileHeader = ({profile}: Props) => {
                         <Item>
                             <Item.Image avatar size='small' src={profile.image}/>
                             <Item.Content verticalAlign='middle'>
-                                <Header as='h1' content="DisplayName"/>
+                                <Header as='h1' content={profile.displayName}/>
                             </Item.Content>
                         </Item>
                     </Item.Group>

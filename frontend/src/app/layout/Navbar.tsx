@@ -3,6 +3,8 @@ import { Button, Container, Menu, Image, Dropdown } from "semantic-ui-react"
 import { Link, NavLink } from "react-router-dom"
 
 import logo from '../../assets/logo.png'
+import userPhoto from '../../assets/user.png'
+
 import { useStore } from "../stores/store"
 
 const Navbar = () => {
@@ -21,7 +23,7 @@ const Navbar = () => {
                     <Button as={NavLink} to="/createActivity" positive content="Create Activity"/>
                 </Menu.Item>
                 <Menu.Item position="right">
-                    <Image src={currentUser?.image || '/assets/user.png'} avatar spaced="right" />
+                    <Image src={currentUser?.image || userPhoto} avatar spaced="right" />
                     <Dropdown pointing="top left" text={currentUser?.displayName} inline>
                         <Dropdown.Menu>
                             <Dropdown.Item as={Link} to={`/profile/${currentUser?.username}`} text="My Profile" icon="user"/>

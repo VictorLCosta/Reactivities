@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
+using Api.Domain.DTOs.Profile;
 using Api.Services.Application.Profiles;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +11,14 @@ namespace Api.Application.Controllers
         public async Task<IActionResult> GetProfile(string username)
         {
             var result = await Mediator.Send(new Details.Query { Username = username });
+
+            return HandleResult(result);
+        }
+
+        [HttpPut("editProfile")]
+        public async Task<IActionResult> Edit(ProfileDto profile)
+        {
+            var result = await Mediator.Send(new Edit.Command { Profile = profile});
 
             return HandleResult(result);
         }

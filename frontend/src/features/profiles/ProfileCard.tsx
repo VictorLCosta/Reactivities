@@ -15,7 +15,7 @@ const ProfileCard = ({profile}: Props) => {
             <Image src={profile.image || userPhoto}/>
             <Card.Content>
                 <Card.Header>{profile.displayName}</Card.Header>
-                <Card.Description>Bio goes here</Card.Description>
+                <Card.Description>{profile.bio?.substring(0, 40) + '...'}</Card.Description>
             </Card.Content>
             <Card.Content extra>
                 <Icon name='user'/>
