@@ -17,7 +17,7 @@ const ActivityListItemAttendee = ({attendees}: Props) => {
                 <>
                     <Popup 
                         hoverable 
-                        key={attendee.displayName}
+                        key={attendee.username}
                         trigger={
                             <List.Item key={attendee.username} as={Link} to={`/profile/${attendee.username}`}>
                                 <Image size="mini" circular src={attendee.image || userPhoto}/>

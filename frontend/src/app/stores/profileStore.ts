@@ -68,12 +68,36 @@ class ProfileStore {
                     this.profile.photos.find(p => p.publicId == photo.publicId)!.isMain = true
                     this.profile.image = photo.url
                     this.loading = false
+
+                    this.updatePhotosInActivityList()
                 }
             })
         } catch (error) {
             runInAction(() => this.loading = false)
             console.log(error)
         }
+    }
+
+    deletePhoto = async (photo: Photo) => {
+        this.loading = true
+        try {
+            await agent.Profiles.deletePhoto(photo.publicId)
+            store.userStore.setImage(photo.url)
+
+            runInAction(() => {
+                if (this.profile) {
+                    this.profile.photos = this.profile.photos?.filter(p => p.publicId !== photo.publicId)
+                    this.loading = false
+                }
+            })
+        } catch (error) {
+            runInAction(() => this.loading = false)
+            console.log(error)
+        }
+    }
+
+    private updatePhotosInActivityList () {
+        store.activityStore.loadActivities()
     }
 }
 
