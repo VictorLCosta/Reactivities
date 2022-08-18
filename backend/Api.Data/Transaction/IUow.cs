@@ -7,6 +7,7 @@ namespace Api.Data.Transaction
     public interface IUow : IDisposable
     {
         IActivityRepository Activities { get; }
+        ICommentRepository Comments { get; }
 
         Task Commit();
     }

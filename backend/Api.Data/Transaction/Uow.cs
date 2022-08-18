@@ -7,6 +7,7 @@ namespace Api.Data.Transaction
     public class Uow : IUow
     {
         public IActivityRepository Activities { get; }
+        public ICommentRepository Comments { get; }
 
         private readonly ApplicationDbContext _context;
 
@@ -15,6 +16,7 @@ namespace Api.Data.Transaction
             _context = context;
 
             Activities = new ActivityRepository(_context);
+            Comments = new CommentRepository(_context);
         }
 
         public async Task Commit()
