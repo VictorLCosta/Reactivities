@@ -23,6 +23,7 @@ namespace Api.CrossCutting.DependencyInjection
                     policy
                         .AllowAnyMethod()
                         .AllowAnyHeader()
+                        .AllowCredentials()
                         .WithOrigins("http://localhost:8000");
                 });
             });
