@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Api.Services.Infrastructure.Security;
+using System.Threading.Tasks;
 
 namespace Api.CrossCutting.DependencyInjection
 {
@@ -37,6 +38,17 @@ namespace Api.CrossCutting.DependencyInjection
                     IssuerSigningKey = key,
                     ValidateAudience = false,
                     ValidateIssuer = false
+                };
+                opt.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context => {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if(!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chat")) {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
                 };
             });
 
