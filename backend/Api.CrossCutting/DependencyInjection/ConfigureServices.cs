@@ -63,6 +63,8 @@ namespace Api.CrossCutting.DependencyInjection
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
+            services.AddSignalR();
+
             return services;
         }
     }

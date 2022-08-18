@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Application.Hubs;
 using Api.Application.Middlewares;
 using Api.CrossCutting.DependencyInjection;
 using Api.Data.Transaction;
@@ -66,6 +67,7 @@ namespace Application
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }
