@@ -1,5 +1,6 @@
 using System.Linq;
 using Api.Domain.DTOs.Activity;
+using Api.Domain.DTOs.Comment;
 using Api.Domain.DTOs.Profile;
 using Api.Domain.Entities;
 using AutoMapper;
@@ -27,6 +28,12 @@ namespace Api.CrossCutting.AutoMapper
 
             CreateMap<AppUser, ProfileDto>()
                 .ForMember(x => x.Image, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
+                .ReverseMap();
+
+            CreateMap<Comment, CommentDto>()
+                .ForMember(x => x.DisplayName, opt => opt.MapFrom(src => src.Author.DisplayName))
+                .ForMember(x => x.Username, opt => opt.MapFrom(src => src.Author.UserName))
+                .ForMember(x => x.Image, opt => opt.MapFrom(src => src.Author.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ReverseMap();
         }
     }
