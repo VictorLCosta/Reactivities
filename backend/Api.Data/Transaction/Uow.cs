@@ -8,6 +8,7 @@ namespace Api.Data.Transaction
     {
         public IActivityRepository Activities { get; }
         public ICommentRepository Comments { get; }
+        public IUserFollowingRepository UserFollowings { get; }
 
         private readonly ApplicationDbContext _context;
 
@@ -17,6 +18,7 @@ namespace Api.Data.Transaction
 
             Activities = new ActivityRepository(_context);
             Comments = new CommentRepository(_context);
+            UserFollowings = new UserFollowingRepository(_context);
         }
 
         public async Task<int> Commit()

@@ -8,6 +8,7 @@ namespace Api.Data.Transaction
     {
         IActivityRepository Activities { get; }
         ICommentRepository Comments { get; }
+        IUserFollowingRepository UserFollowings { get; }
 
         Task<int> Commit();
     }
