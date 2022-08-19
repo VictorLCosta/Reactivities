@@ -11,6 +11,8 @@ namespace Api.CrossCutting.AutoMapper
     {
         public MappingProfile()
         {
+            string currentUsername = null;
+
             CreateMap<Activity, Activity>()
                 .ReverseMap();
 
@@ -30,6 +32,7 @@ namespace Api.CrossCutting.AutoMapper
                 .ForMember(x => x.Image, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(x => x.FollowerCount, opt => opt.MapFrom(src => src.Followers.Count))
                 .ForMember(x => x.FollowingCount, opt => opt.MapFrom(src => src.Followings.Count))
+                .ForMember(x => x.Following, opt => opt.MapFrom(src => src.Followers.Any(x => x.Observer.UserName == currentUsername)))
                 .ReverseMap();
 
             CreateMap<Comment, CommentDto>()

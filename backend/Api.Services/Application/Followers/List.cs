@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Api.Data.Transaction;
 using Api.Domain.DTOs.Profile;
 using Api.Services.Application.Core;
+using Api.Services.Infrastructure.Security;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -25,11 +26,13 @@ namespace Api.Services.Application.Followers
         {
             private readonly IUow _uow;
             private readonly IMapper _mapper;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(IUow uow, IMapper mapper)
+            public Handler(IUow uow, IMapper mapper, IUserAccessor userAccessor)
             {
                 _uow = uow;
                 _mapper = mapper;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Result<List<ProfileDto>>> Handle(Query request, CancellationToken cancellationToken)
@@ -42,7 +45,7 @@ namespace Api.Services.Application.Followers
                         profiles = await _uow.UserFollowings
                             .FindBy(x => x.Target.UserName == request.Username)
                             .Select(x => x.Observer)
-                            .ProjectTo<ProfileDto>(_mapper.ConfigurationProvider)
+                            .ProjectTo<ProfileDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
                             .ToListAsync();
                         break;
 
@@ -50,7 +53,7 @@ namespace Api.Services.Application.Followers
                         profiles = await _uow.UserFollowings
                             .FindBy(x => x.Observer.UserName == request.Username)
                             .Select(x => x.Target)
-                            .ProjectTo<ProfileDto>(_mapper.ConfigurationProvider)
+                            .ProjectTo<ProfileDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
                             .ToListAsync();
                         break;
                 }
