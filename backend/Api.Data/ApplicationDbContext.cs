@@ -16,6 +16,7 @@ namespace Api.Data
         public DbSet<ActivityAttendee> ActivityAttendees { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<UserFollowing> UserFollowings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -23,6 +24,7 @@ namespace Api.Data
 
             builder.ApplyConfiguration(new ActivityAttendeeMap());
             builder.ApplyConfiguration(new CommentMap());
+            builder.ApplyConfiguration(new UserFollowingMap());
         }
     }
 }
