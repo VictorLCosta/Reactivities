@@ -49,7 +49,7 @@ const ActivityDetailedChat = ({ activityId }: Props) => {
                                     {comment.displayName}
                                 </Comment.Author>
                                 <Comment.Metadata>
-                                    <div></div>
+                                    <div>{comment.createdAt.toDateString()}</div>
                                 </Comment.Metadata>
                                 <Comment.Text>{comment.body}</Comment.Text>
                                 <Comment.Actions>
@@ -73,7 +73,7 @@ const ActivityDetailedChat = ({ activityId }: Props) => {
                                                 rows={2}
                                                 {...props.field}
                                                 onKeyPress={e => {
-                                                    if (e.key === 'Epnter' && e.shiftKey) {
+                                                    if (e.key === 'Enter' && e.shiftKey) {
                                                         return;
                                                     }
                                                     if (e.key === "Enter" && !e.shiftKey) {

@@ -13,12 +13,13 @@ import Loading from '../../../app/layout/Loading';
 
 const ActivityDetails = () => {
     const { activityStore } = useStore()
-    const { activity, loadActivity, loadingInitial } = activityStore
+    const { activity, loadActivity, loadingInitial, clearSelectedActivity } = activityStore
     const {id} = useParams<{id: string}>()
 
     useEffect(() => {
         if (id) loadActivity(id)
-    }, [id, loadActivity])
+        return () => clearSelectedActivity()
+    }, [id, loadActivity, clearSelectedActivity])
 
     if (loadingInitial || !activity) return <Loading/>;
 

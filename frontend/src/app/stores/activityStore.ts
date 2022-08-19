@@ -183,6 +183,10 @@ class ActivityStore {
         }
     }
 
+    clearSelectedActivity = () => {
+        this.activity = undefined
+    }
+
 }
 
 export default ActivityStore
