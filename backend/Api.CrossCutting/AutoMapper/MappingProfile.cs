@@ -28,6 +28,8 @@ namespace Api.CrossCutting.AutoMapper
 
             CreateMap<AppUser, ProfileDto>()
                 .ForMember(x => x.Image, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
+                .ForMember(x => x.FollowerCount, opt => opt.MapFrom(src => src.Followers.Count))
+                .ForMember(x => x.FollowingCount, opt => opt.MapFrom(src => src.Followings.Count))
                 .ReverseMap();
 
             CreateMap<Comment, CommentDto>()
