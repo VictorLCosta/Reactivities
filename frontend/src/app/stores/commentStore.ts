@@ -21,7 +21,7 @@ class CommentStore {
                 .configureLogging(LogLevel.Information)
                 .build()
 
-            this.hubConnection.start().catch(err => console.log("Error establishing the connection"))
+            this.hubConnection.start().catch(err => console.log("Error establishing the connection: " + err))
 
             this.hubConnection.on("LoadComments", (comments: ChatComment[]) => {
                 runInAction(() => this.comments = comments)
@@ -34,12 +34,22 @@ class CommentStore {
     }
 
     stopHubConnection = () => {
-        this.hubConnection?.stop().catch(err => console.log('Error stopping the connection:' + err))
+        this.hubConnection?.stop().catch(err => console.log('Error stopping the connection: ' + err))
     }
 
     clearComments = () => {
         this.comments = []
         this.stopHubConnection()
+    }
+
+    addComment = async (values: any) => {
+        values.activityId = store.activityStore.activity?.id
+        try {
+           await this.hubConnection?.invoke("SendComment", values)
+            
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 

@@ -19,9 +19,9 @@ namespace Api.Data.Transaction
             Comments = new CommentRepository(_context);
         }
 
-        public async Task Commit()
+        public async Task<int> Commit()
         {
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public async void Dispose()

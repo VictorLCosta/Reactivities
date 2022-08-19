@@ -64,11 +64,13 @@ namespace Api.Services.Application.Comments
                     Body = request.Body
                 };
 
-                var result = await _uow.Comments.AddAsync(comment);
+                var commentDb = await _uow.Comments.AddAsync(comment);
 
-                if (result.Body != comment.Body) return Result<CommentDto>.Failed("Failed to add comment");
+                var result = await _uow.Commit();
 
-                return Result<CommentDto>.Success(_mapper.Map<CommentDto>(result));
+                if (result == 0) return Result<CommentDto>.Failed("Failed to add comment");
+
+                return Result<CommentDto>.Success(_mapper.Map<CommentDto>(commentDb));
             }
         }
     }

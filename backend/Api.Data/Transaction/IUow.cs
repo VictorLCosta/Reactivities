@@ -9,6 +9,6 @@ namespace Api.Data.Transaction
         IActivityRepository Activities { get; }
         ICommentRepository Comments { get; }
 
-        Task Commit();
+        Task<int> Commit();
     }
 }
