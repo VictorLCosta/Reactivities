@@ -26,6 +26,9 @@ namespace Api.CrossCutting.AutoMapper
                 .ForMember(x => x.Username, opt => opt.MapFrom(src => src.AppUser.UserName))
                 .ForMember(x => x.Bio, opt => opt.MapFrom(src => src.AppUser.Bio))
                 .ForMember(x => x.Image, opt => opt.MapFrom(src => src.AppUser.Photos.FirstOrDefault(x => x.IsMain).Url))
+                .ForMember(x => x.FollowerCount, opt => opt.MapFrom(src => src.AppUser.Followers.Count))
+                .ForMember(x => x.FollowingCount, opt => opt.MapFrom(src => src.AppUser.Followings.Count))
+                .ForMember(x => x.Following, opt => opt.MapFrom(src => src.AppUser.Followers.Any(x => x.Observer.UserName == currentUsername)))
                 .ReverseMap();
 
             CreateMap<AppUser, ProfileDto>()
