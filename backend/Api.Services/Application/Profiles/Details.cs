@@ -25,9 +25,9 @@ namespace Api.Services.Application.Profiles
         {
             private readonly ApplicationDbContext _context;
             private readonly IMapper _mapper;
-            private readonly UserAccessor _userAccessor;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(ApplicationDbContext context, IMapper mapper, UserAccessor userAccessor)
+            public Handler(ApplicationDbContext context, IMapper mapper, IUserAccessor userAccessor)
             {
                 _context = context;
                 _mapper = mapper;
