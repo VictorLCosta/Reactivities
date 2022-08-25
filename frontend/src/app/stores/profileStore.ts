@@ -8,6 +8,7 @@ class ProfileStore {
     loadingProfile = false
     uploading = false
     loading = false
+    followings: Profile[] = []
 
     constructor() {
         makeAutoObservable(this)
@@ -112,6 +113,29 @@ class ProfileStore {
         } catch (error) {
             runInAction(() => this.loading = false)
             console.log(error)
+        }
+    }
+
+    updateFollowing = async (username: string, following: boolean) => {
+        this.loading = true
+        try {
+            await agent.Profiles.updateFollowing(username)
+            store.activityStore.updateAttendeeFollowing(username)
+            runInAction(() => {
+                if (this.profile && this.profile.username !== store.userStore.currentUser?.username) {
+                    following ? this.profile.followerCount++ : this.profile.followerCount--
+                    this.profile.following = !this.profile.following
+                }
+                this.followings.forEach(profile => {
+                    if (profile.username == username) {
+                        profile.following ? profile.followerCount-- : profile.followerCount--
+                        profile.following = !profile.following
+                    }
+                })
+            })
+        } catch (error) {
+            console.log(error)
+            runInAction(() => this.loading = false)
         }
     }
 
