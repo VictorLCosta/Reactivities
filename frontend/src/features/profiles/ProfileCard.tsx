@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { Link } from 'react-router-dom';
 
 import userPhoto from '../../assets/user.png'
+import FollowButton from './FollowButton';
 
 interface Props {
     profile: Profile
@@ -21,6 +22,7 @@ const ProfileCard = ({profile}: Props) => {
                 <Icon name='user'/>
                 {profile.followerCount} followers
             </Card.Content>
+            <FollowButton profile={profile} />
         </Card>
     )
 }
