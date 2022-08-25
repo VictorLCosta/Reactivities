@@ -1,5 +1,5 @@
 import { Photo, Profile } from "../models/profile"
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, runInAction, reaction } from 'mobx';
 import agent from "../api/agent";
 import { store } from './store';
 
@@ -9,9 +9,27 @@ class ProfileStore {
     uploading = false
     loading = false
     followings: Profile[] = []
-
+    loadingFollowings: boolean = false
+    activeTab = 0;
+    
     constructor() {
         makeAutoObservable(this)
+
+        reaction(
+            () => this.activeTab,
+            activeTab => {
+                if (activeTab === 3 || activeTab === 4) {
+                    const predicate = activeTab === 3 ? 'followers' : 'following'
+                    this.loadFollowings(predicate)
+                } else {
+                    this.followings = []
+                }
+            }
+        )
+    }
+
+    setActiveTab = (activeTab: any) => {
+        this.activeTab = activeTab
     }
 
     get isCurrentUser() {
@@ -126,6 +144,9 @@ class ProfileStore {
                     following ? this.profile.followerCount++ : this.profile.followerCount--
                     this.profile.following = !this.profile.following
                 }
+                if (this.profile && this.profile.username === store.userStore.currentUser?.username) {
+                    following ? this.profile.followingCount++ : this.profile.followerCount--
+                }
                 this.followings.forEach(profile => {
                     if (profile.username == username) {
                         profile.following ? profile.followerCount-- : profile.followerCount--
@@ -136,6 +157,20 @@ class ProfileStore {
         } catch (error) {
             console.log(error)
             runInAction(() => this.loading = false)
+        }
+    }
+
+    loadFollowings = async (predicate: string) => {
+        this.loadingFollowings = true
+        try {
+            const followings = await agent.Profiles.listFollowings(this.profile!.username, predicate)
+            runInAction(() => {
+                this.followings = followings
+                this.loadingFollowings = false
+            })
+        } catch (error) {
+            console.log(error)
+            runInAction(() => this.loadingFollowings = false)
         }
     }
 
