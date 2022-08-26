@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Api.Data.Transaction;
@@ -15,9 +16,12 @@ namespace Api.Services.Application.Activitities
 {
     public class List
     {
-        public class Query : IRequest<Result<IEnumerable<ActivityDto>>> {}
+        public class Query : IRequest<Result<PagedList<ActivityDto>>> 
+        {
+            public PagingParams Params { get; set; }
+        }
 
-        public class Handler : IRequestHandler<Query, Result<IEnumerable<ActivityDto>>>
+        public class Handler : IRequestHandler<Query, Result<PagedList<ActivityDto>>>
         {
             private readonly IUow _unitOfWork;
             private readonly IMapper _mapper;
@@ -30,15 +34,17 @@ namespace Api.Services.Application.Activitities
                 _userAccessor = userAccessor;
             }
 
-            public async Task<Result<IEnumerable<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var activities = await _unitOfWork
+                var query = _unitOfWork
                     .Activities
                     .AsQueryable()
                     .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
-                    .ToListAsync();
+                    .AsQueryable();
 
-                return Result<IEnumerable<ActivityDto>>.Success(activities);
+                return Result<PagedList<ActivityDto>>.Success(
+                    await PagedList<ActivityDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)
+                );
             }
         }
     }
