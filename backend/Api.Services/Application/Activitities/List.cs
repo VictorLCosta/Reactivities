@@ -39,8 +39,8 @@ namespace Api.Services.Application.Activitities
                 var query = _unitOfWork
                     .Activities
                     .AsQueryable()
-                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
-                    .AsQueryable();
+                    .OrderBy(x => x.Date)
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() });
 
                 return Result<PagedList<ActivityDto>>.Success(
                     await PagedList<ActivityDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)

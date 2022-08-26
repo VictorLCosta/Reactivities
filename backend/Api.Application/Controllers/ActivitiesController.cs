@@ -16,7 +16,7 @@ namespace Api.Application.Controllers
         {
             var result = await Mediator.Send(new List.Query { Params = param });
 
-            return HandleResult(result);
+            return HandlePagedResult(result);
         }
 
         [HttpGet("{id}")]
