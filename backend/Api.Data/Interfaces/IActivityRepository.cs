@@ -8,6 +8,5 @@ namespace Api.Data.Interfaces
     public interface IActivityRepository : IRepository<Activity>
     {
         Task<Activity> GetByIdAsync(Guid id);
-        object OrderBy();
     }
 }

@@ -36,7 +36,7 @@ namespace Api.Application.Controllers
 
             if(result.IsSuccess && result.Value != null)
             {
-                Response.AddPaginationHeader(result.Value.CurrentPage, result.Value.PageSize, result.Value.TotalCount, result.Value.TotalCount);
+                Response.AddPaginationHeader(result.Value.CurrentPage, result.Value.PageSize, result.Value.TotalCount, result.Value.TotalPages);
                 return Ok(result.Value);
             }
 

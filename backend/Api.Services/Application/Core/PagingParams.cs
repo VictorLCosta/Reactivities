@@ -7,7 +7,7 @@ namespace Api.Services.Application.Core
 {
     public class PagingParams
     {
-        private const int MaxPageSize = 3;
+        private const int MaxPageSize = 50;
         public int PageNumber { get; set; } = 1;
 
         private int _pageSize = 10;
