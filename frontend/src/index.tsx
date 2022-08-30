@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import App from "./app/layout/App";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from 'history';
+import ScrollToTop from "./app/layout/ScrollToTop";
 
 import { store, StoreContext } from "./app/stores/store";
 
@@ -17,6 +18,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <StoreContext.Provider value={store}>
         <Router history={history}>
+            <ScrollToTop />
             <App/>
         </Router>
     </StoreContext.Provider>
