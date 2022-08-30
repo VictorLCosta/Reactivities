@@ -1,4 +1,4 @@
-import { Button, Grid, Loader } from "semantic-ui-react"
+import { Grid, Loader } from "semantic-ui-react"
 import ActivityList from './ActivityList';
 import Loading from "../../../app/layout/Loading";
 import ActivityFilters from "./ActivityFilters";
