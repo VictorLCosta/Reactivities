@@ -20,6 +20,7 @@ import { useEffect } from 'react';
 import Loading from './Loading';
 import ModalContainer from '../common/modals/ModalContainer';
 import ProfilePage from './../../features/profiles/ProfilePage';
+import PrivateRoute from './PrivateRoute';
 
 const App = () => {
     const location = useLocation()
@@ -47,13 +48,12 @@ const App = () => {
                         <Navbar/>
                         <Container style={{marginTop: '5em'}}>
                             <Switch>
-                                <Route path="/activities" exact component={ActivityDashboard}/>
-                                <Route path="/activities/:id" component={ActivityDetails}/>
-                                <Route key={location.key} path={["/createActivity", "/manage/:id"]} component={ActivityForm}/>
-                                <Route path="/profile/:username" component={ProfilePage}/>
-                                <Route path="/errors" component={TestErrors}/>
+                                <PrivateRoute path="/activities" exact component={ActivityDashboard}/>
+                                <PrivateRoute path="/activities/:id" component={ActivityDetails}/>
+                                <PrivateRoute key={location.key} path={["/createActivity", "/manage/:id"]} component={ActivityForm}/>
+                                <PrivateRoute path="/profile/:username" component={ProfilePage}/>
+                                <PrivateRoute path="/errors" component={TestErrors}/>
                                 <Route path="/server-error" component={ServerError}/>
-                                <Route path="/login" component={LoginForm}/>
                                 <Route component={NotFound}/>
                             </Switch>
                         </Container>
