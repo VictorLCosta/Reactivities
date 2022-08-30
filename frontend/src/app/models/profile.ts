@@ -24,3 +24,10 @@ export interface Photo {
     publicId: string,
     isMain: boolean
 }
+
+export interface UserActivity {
+    id: string;
+    title: string;
+    category: string;
+    date: Date;
+}
