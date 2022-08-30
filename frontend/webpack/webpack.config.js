@@ -5,6 +5,7 @@ const webpack = require("webpack")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 
 const config = {
     entry: path.resolve(__dirname, "..", "./src/index.tsx"),
@@ -43,6 +44,7 @@ const config = {
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
             jquery: 'modules/jquery/src/jquery.js',
+            process: "process/browser"
         }
     },
     output: {
@@ -60,7 +62,8 @@ const config = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
-            'window.jQuery': 'jquery'
+            'window.jQuery': 'jquery',
+            process: "process/browser"
         }),
         new webpack.ProvidePlugin({
             "React": "react"
@@ -70,6 +73,9 @@ const config = {
         }),
         new MiniCssExtractPlugin({
             filename: 'app.css'
+        }),
+        new Dotenv({
+            systemvars: true
         }),
         new ForkTsCheckerWebpackPlugin({
             async: false,
