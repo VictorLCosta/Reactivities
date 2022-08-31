@@ -1,87 +1,9 @@
-const path = require("path")
+const { merge } = require('webpack-merge')
+const commonConfig = require('./webpack.common.js')
 
-const webpack = require("webpack")
-
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const Dotenv = require('dotenv-webpack');
-
-const config = {
-    entry: path.resolve(__dirname, "..", "./src/index.tsx"),
-    mode: "development",
-    module: {
-        rules: [
-            {
-                test: /\.(ts|js)x?$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: [
-                            "@babel/preset-env",
-                            "@babel/preset-react",
-                            "@babel/preset-typescript"
-                        ]
-                    }
-                }
-            },
-            {
-                test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
-            },
-            {
-                test: /\.(ico|gif|png|jpg|jpeg)$/i,
-                type: 'asset/resource'
-            },
-            {
-                test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
-                type: 'asset/inline'
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
-        alias: {
-            jquery: 'modules/jquery/src/jquery.js',
-            process: "process/browser"
-        }
-    },
-    output: {
-        path: path.resolve(__dirname, "..", "./build"),
-        filename: "app.js",
-        publicPath: "/"
-    },
-    devServer: {
-        static: path.join(__dirname, "build"),
-        compress: true,
-        port: 8000,
-        historyApiFallback: true,
-    },
-    plugins: [
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery',
-            process: "process/browser"
-        }),
-        new webpack.ProvidePlugin({
-            "React": "react"
-        }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, "..", "./public/index.html")
-        }),
-        new MiniCssExtractPlugin({
-            filename: 'app.css'
-        }),
-        new Dotenv({
-            systemvars: true
-        }),
-        new ForkTsCheckerWebpackPlugin({
-            async: false,
-            devServer: true
-        })
-    ]
+module.exports = (envVars) => {
+    const { env } = envVars
+    const envConfig = require(`./webpack.${env}.js`)
+    const config = merge(commonConfig, envConfig)
+    return config
 }
-
-module.exports = config
