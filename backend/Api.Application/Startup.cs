@@ -1,22 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Api.Application.Hubs;
 using Api.Application.Middlewares;
 using Api.CrossCutting.DependencyInjection;
 using Api.Data.Transaction;
-using Api.Services.Application.Activitities;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 
 namespace Application
 {
@@ -59,8 +49,12 @@ namespace Application
             }
 
             app.UseHttpsRedirection();
-            app.UseCors();
             app.UseRouting();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -68,6 +62,7 @@ namespace Application
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chat");
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }
