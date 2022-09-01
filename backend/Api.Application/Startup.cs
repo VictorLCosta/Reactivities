@@ -30,6 +30,20 @@ namespace Application
         {
             app.UseMiddleware<ExceptionMiddleware>();
 
+            app.UseXContentTypeOptions();
+            app.UseReferrerPolicy(opt => opt.NoReferrer());
+            app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
+            app.UseXfo(opt => opt.Deny());
+            app.UseCspReportOnly(opt => opt
+                .BlockAllMixedContent()
+                .StyleSources(s => s.Self())
+                .FontSources(s => s.Self())
+                .FormActions(s => s.Self())
+                .FrameAncestors(s => s.Self())
+                .ImageSources(s => s.Self())
+                .ScriptSources(s => s.Self())
+            );
+
             app.Use(async (context, next) =>
             {
                 await next.Invoke();
