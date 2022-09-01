@@ -10,7 +10,7 @@ interface Props {
     attendees: Profile[]
 }
 
-const ActivityListItemAttendee = ({attendees}: Props) => {
+const ActivityListItemAttendee = ({ attendees }: Props) => {
     const style = {
         borderColor: 'orange',
         borderWidth: 3
@@ -19,27 +19,26 @@ const ActivityListItemAttendee = ({attendees}: Props) => {
     return (
         <List horizontal>
             {attendees.map(attendee => (
-                <>
-                    <Popup 
-                        hoverable 
-                        key={attendee.username}
-                        trigger={
-                            <List.Item key={attendee.username} as={Link} to={`/profile/${attendee.username}`}>
-                                <Image 
-                                    size="mini" 
-                                    circular 
-                                    src={attendee.image || userPhoto}
-                                    bordered
-                                    style={attendee.following ? style : null}
-                                />
-                            </List.Item>
-                        }
-                    >
-                        <Popup.Content>
-                            <ProfileCard profile={attendee}/>
-                        </Popup.Content>
-                    </Popup>
-                </>
+                <Popup
+                    hoverable
+                    key={attendee.username}
+                    trigger={
+                        <List.Item key={attendee.username} as={Link} to={`/profile/${attendee.username}`}>
+                            <Image
+                                size="mini"
+                                circular
+                                src={attendee.image || userPhoto}
+                                bordered
+                                style={attendee.following ? style : null}
+                            />
+                        </List.Item>
+                    }
+                >
+                    <Popup.Content>
+                        <ProfileCard profile={attendee} />
+                    </Popup.Content>
+                </Popup>
+
             ))}
         </List>
     )
