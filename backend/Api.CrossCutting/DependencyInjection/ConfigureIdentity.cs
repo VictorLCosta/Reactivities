@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Api.Services.Infrastructure.Security;
 using System.Threading.Tasks;
+using System;
 
 namespace Api.CrossCutting.DependencyInjection
 {
@@ -37,7 +38,9 @@ namespace Api.CrossCutting.DependencyInjection
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = key,
                     ValidateAudience = false,
-                    ValidateIssuer = false
+                    ValidateIssuer = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
                 };
                 opt.Events = new JwtBearerEvents
                 {
