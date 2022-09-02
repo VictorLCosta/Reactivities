@@ -30,7 +30,7 @@ const App = () => {
         if (commonStore.token) {
             userStore.getUser().finally(() => commonStore.setAppLoaded())
         } else {
-            commonStore.setAppLoaded()
+            userStore.getFacebookLoginStatus().then(() => commonStore.setAppLoaded())
         }
     }, [commonStore, userStore])
 

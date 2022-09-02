@@ -26,6 +26,7 @@ const HomePage = () => {
                         <Button onClick={() => modalStore.openModal(<RegisterForm/>)} content="Register" size="huge" inverted/>
                         <Divider horizontal inverted>Or</Divider>
                         <Button
+                            loading={userStore.fbLoading}
                             size="huge"
                             inverted
                             color="facebook" 

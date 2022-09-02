@@ -6,6 +6,8 @@ import { history } from "../..";
 
 class UserStore {
     currentUser: User | null = null
+    fbAccessToken: string | null = null
+    fbLoading = false
 
     constructor () {
         makeAutoObservable(this)
@@ -69,8 +71,33 @@ class UserStore {
 
     facebookLogin = () => {
         window.FB.login(res => {
-            console.log(res)
+            agent.Account.fbLogin(res.authResponse.accessToken).then(user => console.log(user))
         }, { scope: 'public_profile,email' })
+    }
+
+    getFacebookLoginStatus = async () => {
+        this.fbLoading = true;
+        const apiLogin = (accessToken: string) => {
+            agent.Account.fbLogin(accessToken).then(user => {
+                store.commonStore.setToken(user.token)
+                runInAction(() => {
+                    this.currentUser = user
+                    this.fbLoading = false
+                })
+                history.push("/activities")
+            }).catch(error => {
+                console.log(error)
+                runInAction(() => this.fbLoading = false)
+            })
+        }
+
+        if (this.fbAccessToken) {
+            apiLogin(this.fbAccessToken)
+        } else {
+            window.FB.login(res => {
+                apiLogin(res.authResponse.accessToken)
+            }, { scope: 'public_profile,email' })
+        }
     }
 }
 
