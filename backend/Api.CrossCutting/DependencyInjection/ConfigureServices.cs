@@ -24,6 +24,7 @@ namespace Api.CrossCutting.DependencyInjection
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
+                        .WithExposedHeaders("WWW-Authenticate")
                         .WithOrigins("http://localhost:8000");
                 });
             });
